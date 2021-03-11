@@ -1,0 +1,25 @@
+{% if error is defined and error is not null %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+{% if message is defined %}
+    <div class="text-center mt-5 mb-5">{{ message }}</div>
+{% endif %}
+
+{% block messages %}
+    {% if app.session.flashBag.has('success') %}
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success mt-3">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if app.session.flashBag.has('error') %}
+        {% for msg in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger mt-3">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,110 @@
+nav.navbar {
+    padding: 20px;
+    /* background-color: #0277bd!important;
+    box-shadow: 1px 1px 1px blue;  */
+}
+
+section#main-container {
+    padding: 15px;
+}
+
+.btn-outline-success.purple-success:hover {
+    background-color: #7e57c2;
+}
+.nav-link.side-menu {
+    border-radius: 0!important;
+}
+
+.left-side, .right-side {
+    padding: 50px;
+    padding-bottom: 15px;
+}
+
+.right-side input, .left-side input {
+    border-radius: 0px;
+    height: 45px;
+}
+
+.center {
+    text-align: center;
+}
+
+.horizontal-margin-none {
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+}
+
+.horizontal-padding-none {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+#search-result-wrapper {
+    padding-top: 35px;
+    padding-bottom: 35px;
+    box-shadow: inset 0 0 1em black, 0 0 1em grey;
+    background-color: #212529;
+}
+#search-result-output > div > a {
+    text-decoration: none;
+    color: black;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.mt-15 {
+    margin-top: 60px !important;
+}
+
+.rankingPicture img {
+    width: 100%; 
+    max-width: 100%;
+    height: 120px;
+}
+
+.ranking-title-div {
+    font-size: 19px;
+    padding-top: 10px;
+    color: #880e4f;
+    text-decoration: none;
+}
+
+.latest-episodes-picture {
+    width: 100%;
+    max-height: 180px;
+}
+
+.card-custom-link {
+    border: solid 1px #ecf0f1; 
+    margin: 2px;
+}
+
+.show-poster {
+    width: 100%;
+    max-height: 680px;
+}
+ 
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display:block;
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
