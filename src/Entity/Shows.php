@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ShowRepository;
+use App\Repository\ShowsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ShowRepository::class)
+ * @ORM\Entity(repositoryClass=ShowsRepository::class)
  */
-class Show
+class Shows
 {
     /**
      * @ORM\Id
@@ -33,7 +33,7 @@ class Show
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=2048)
      */
     private $description;
 

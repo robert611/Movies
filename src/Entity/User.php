@@ -42,7 +42,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Show::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Shows::class, mappedBy="user")
      */
     private $shows;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Show;
+use App\Entity\Shows;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Shows[]    findAll()
  * @method Shows[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ShowRepository extends ServiceEntityRepository
+class ShowsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Show::class);
+        parent::__construct($registry, Shows::class);
     }
 
     public function createShowTable(string $tableName): bool
