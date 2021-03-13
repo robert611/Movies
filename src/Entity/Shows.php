@@ -49,7 +49,7 @@ class Shows
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -118,9 +118,9 @@ class Shows
         return $this;
     }
 
-    public function getCreatedAt(): ?String
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at->format('Y-m-d H:i:s');
+        return $this->created_at;
     }
 
     public function setCreatedAt(\DateTimeInterface $created_at): self
@@ -130,9 +130,9 @@ class Shows
         return $this;
     }
 
-    public function getUpdatedAt(): ?String
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : '';
+        return $this->updated_at ? $this->updated_at : new \DateTime();
     }
 
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
