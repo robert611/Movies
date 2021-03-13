@@ -64,7 +64,11 @@ section#main-container {
 }
 
 .mt-15 {
-    margin-top: 60px !important;
+    margin-top: 60px!important;
+}
+
+.mt-20 {
+    margin-top: 80px!important;
 }
 
 .rankingPicture img {
@@ -80,7 +84,7 @@ section#main-container {
     text-decoration: none;
 }
 
-.latest-episodes-picture {
+.latest-episode-picture {
     width: 100%;
     max-height: 180px;
 }
@@ -99,6 +103,22 @@ section#main-container {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
     display:block;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.light-hr {
+    opacity: 0.10;
+}
+
+.mb-7 {
+    margin-bottom: 4rem!important;
+}
+
+.text-purple {
+    color: #880e4f;
 }
 
 .footer {

@@ -19,32 +19,44 @@ class LatestEpisodesRepository extends ServiceEntityRepository
         parent::__construct($registry, LatestEpisodes::class);
     }
 
-    // /**
-    //  * @return LatestEpisodes[] Returns an array of LatestEpisodes objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getLatestEpisodesWithFilledData(int $numberOfEpisodes = 9): array
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?LatestEpisodes
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $latestEpisodes = $this->getLatestEpisodes($numberOfEpisodes);
+
+        $latestEpisodesWithFilledData = array();
+
+        foreach ($latestEpisodes as $episode)
+        {
+            $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, s.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.episode = :episode_id";
+
+            try {
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['table_name' => $episode['show_database_table_name'], 'episode_id' => $episode['episode_id']]);
+            } catch (DBALException $e) {
+                return $e->getMessage();
+            }
+
+            $latestEpisodesWithFilledData[] = $stmt->fetch();
+        }
+
+        return $latestEpisodesWithFilledData;
     }
-    */
+
+    public function getLatestEpisodes(int $numberOfEpisodes): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM latest_episodes ORDER BY id DESC LIMIT 15";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetchAll();
+    }
 }

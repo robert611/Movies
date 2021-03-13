@@ -1,0 +1,41 @@
+<header>
+    <div class="container-fluid header mt-5 mb-5">
+    
+        <div class="row mb-3">
+            <div class="col-xs-12 col-sm-12 col-md-6 left-side">
+                <form id="search-series-form">  
+                    <div class="form-group">
+                        <h1 class="center mb-4">Znajdź Serial</h1>
+                        <input type="text" class="form-control" id="search-series-input" placeholder="Big Time rush">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 right-side">
+                <form id="search-episode-form"> 
+                    <div class="form-group">
+                        <h1 class="center mb-4">Znajdź odcinek</h1>
+                        <input type="text" class="form-control" name="episodeTerm" id="search-episode-input" placeholder="Jak kręcono Victorię">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-15 container-fluid horizontal-padding-none">
+
+        <center class="hide" id="search-result-spinner">
+            <div class="spinner-border text-secondary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </center>
+
+        <div id="search-result-wrapper" class="hide">
+            <div class="row horizontal-margin-none" id="search-result-output">
+
+            </div>
+        </div>
+
+    </div>
+</header>
