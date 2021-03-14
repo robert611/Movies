@@ -35,4 +35,20 @@ class ShowsRepository extends ServiceEntityRepository
 
         return true;
     }
+
+    public function findShowAllEpisodesBy(string $showName, string $searchedTerm): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM ${showName} WHERE title LIKE '%{$searchedTerm}%'";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetchAll();
+    }
 }

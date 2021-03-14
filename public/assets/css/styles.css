@@ -39,13 +39,13 @@ section#main-container {
     padding-right: 0px!important;
 }
 
-#search-result-wrapper {
+#search-results-wrapper {
     padding-top: 35px;
     padding-bottom: 35px;
     box-shadow: inset 0 0 1em black, 0 0 1em grey;
     background-color: #212529;
 }
-#search-result-output > div > a {
+#search-results-output > div > a {
     text-decoration: none;
     color: black;
 }
@@ -119,6 +119,10 @@ section#main-container {
 
 .text-purple {
     color: #880e4f;
+}
+
+#no-search-results {
+    font-size: 1.3rem;
 }
 
 .footer {

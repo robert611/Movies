@@ -6,7 +6,7 @@
                 <form id="search-series-form">  
                     <div class="form-group">
                         <h1 class="center mb-4">Znajdź Serial</h1>
-                        <input type="text" class="form-control" id="search-series-input" placeholder="Big Time rush">
+                        <input type="text" class="form-control" id="search-series-input" placeholder="Big Time Rush (Minimum trzy litery)">
                     </div>
                 </form>
             </div>
@@ -15,7 +15,7 @@
                 <form id="search-episode-form"> 
                     <div class="form-group">
                         <h1 class="center mb-4">Znajdź odcinek</h1>
-                        <input type="text" class="form-control" name="episodeTerm" id="search-episode-input" placeholder="Jak kręcono Victorię">
+                        <input type="text" class="form-control" name="episodeTerm" id="search-episode-input" placeholder="Jak kręcono victorię (Minimum trzy litery)">
                     </div>
                 </form>
             </div>
@@ -31,11 +31,13 @@
             </div>
         </center>
 
-        <div id="search-result-wrapper" class="hide">
-            <div class="row horizontal-margin-none" id="search-result-output">
-
-            </div>
+        <div id="search-results-wrapper" class="hide">
+            <div class="row horizontal-margin-none" id="search-results-container"></div>
         </div>
+
+        <center>
+            <div id="no-search-results" class="text-purple"></div>
+        </center>
 
     </div>
 </header>
