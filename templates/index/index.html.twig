@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }} 
+    <script src="{{ asset('assets/js/shows_ranking.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     {{ include('index/_header.html.twig') }}
 
@@ -14,7 +19,7 @@
                     <div class="card text-center">
                         <div class="card-body">
                             <h3>#<span class="text-purple">Pojedynek</span> Seriali</h3>
-                            <div class="row ranking-compare"></div>
+                            <div class="row" id="container-for-shows-to-compare"></div>
                         </div>
                     </div> 
 
