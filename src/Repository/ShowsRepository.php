@@ -40,11 +40,11 @@ class ShowsRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT * FROM ${showName} WHERE title LIKE '%{$searchedTerm}%'";
+        $sql = "SELECT * FROM ${showName} WHERE title LIKE :searched_term";
 
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute();
+            $stmt->execute(['searched_term' => '%'.$searchedTerm.'%']);
         } catch (DBALException $e) {
             return $e->getMessage();
         }
