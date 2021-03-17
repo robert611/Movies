@@ -154,7 +154,7 @@ function showFoundEpisodes(episodes, searchedTerm, resultsContainer)
 function createEpisodeWidget(episode)
 {
     let a = document.createElement('a');
-    a.setAttribute('href', `/series/${episode.table_name}/${episode.season}/${episode.episode}`);
+    a.setAttribute('href', `/show/${episode.table_name}/${episode.season}/${episode.episode}`);
     a.classList.add('text-decoration-none');
 
     let wrapper = document.createElement('div');

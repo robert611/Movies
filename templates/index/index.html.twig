@@ -32,7 +32,7 @@
                                 {% if showsRanking is iterable %}
                                     {% for show in showsRanking %}
                                         <a class="nav-link side-menu card-custom-link"
-                                        href="{ { path('series_index', {'seriesName' : show.getShowDatabaseTableName()}) }}" role="tab" aria-controls="v-pills-{{ show.getShowName() }}" aria-selected="true">{{ show.getShowName() }}</a>
+                                        href="{{ path('show_index', {'showTableName' : show.getShowDatabaseTableName()}) }}" role="tab" aria-controls="v-pills-{{ show.getShowName() }}" aria-selected="true">{{ show.getShowName() }}</a>
                                     {% endfor %}
                                 {% elseif showsRanking is defined %}
                                     <div class="alert alert-danger">
@@ -45,25 +45,25 @@
                 </div>
                 <div class="col-xs-12 col-md-8">
                     {% if showsLatestEpisodes is iterable %}
-                    <div class="row">
-                        {% for episode in showsLatestEpisodes %}
-                            <div class="xol-xs-12 col-sm-6 col-md-4">
-                                <div class="card mb-2">
-                                    <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
-                                    <div class="card-body">
-                                        <a class="text-decoration-none" href="{ { path('series_index', {'seriesName' : episode.database_table_name, 'season': episode.season, 'episodeId': episode.id}) }}">
-                                            <h5 class="card-title">
-                                                {{ episode.show_name }}  {{ episode.title }}
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        {{ episode.created_at }}
+                        <div class="row">
+                            {% for episode in showsLatestEpisodes %}
+                                <div class="xol-xs-12 col-sm-6 col-md-4">
+                                    <div class="card mb-2">
+                                        <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
+                                        <div class="card-body">
+                                            <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeSeason': episode.season, 'episodeId': episode.id}) }}">
+                                                <h5 class="card-title">
+                                                    {{ episode.show_name }}  {{ episode.title }}
+                                                </h5>
+                                            </a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            {{ episode.created_at }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </div>

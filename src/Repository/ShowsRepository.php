@@ -51,4 +51,21 @@ class ShowsRepository extends ServiceEntityRepository
 
         return $stmt->fetchAll();
     }
+
+    public function findEpisode(string $showTableName, int $episodeId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM {$showTableName} where id = :id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute(['id' => $episodeId]);
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetch();
+    }
 }

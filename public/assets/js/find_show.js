@@ -32,7 +32,7 @@ function findMatchingShows(shows)
 function createShowWidget(show)
 {
     let a = document.createElement('a');
-    a.setAttribute('href', `/series/${show.databaseTableName}/1/1`);
+    a.setAttribute('href', `/show/${show.databaseTableName}/1/1`);
     a.classList.add('text-decoration-none');
 
     let wrapper = document.createElement('div');

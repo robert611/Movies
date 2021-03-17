@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movies - {{ show.name }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }} 
+    <script src="{{ asset('assets/js/highlight_show_season.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 mt-4">
+                {% if showSeasonsNumbers is defined %}
+                    <input type="hidden" id="current-season" value="{{ episode.season }}">
+                    <div class="mt-2">
+                        {% for season, firstEpisode in showSeasonsNumbers %}
+                            <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeSeason': season, 'episodeId': firstEpisode}) }}">
+                                <button class="btn btn-outline-secondary mt-1" id="season{{ season }}" role="button" aria-expanded="false">
+                                    Sezon {{ season }}
+                                </button>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="card mt-2 no-border-radius width-100">
+                    <div class="card-body"> 
+                        <div class="mt-1 mb-1 season">
+                            {% for episode in episodes %}
+                                <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeSeason': episode.season, 'episodeId': episode.id}) }}" class="nav-link side-menu card-custom-link" role="tab">
+                                    <span class="text-grey-dark">#{{ episode.episode }}</span>
+                                    {{ episode.title }}
+                                </a>     
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            {% if episode is iterable %}
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 mt-4">
+
+                    <img class="show-poster" src="{{ asset('assets/pictures/shows/'~show.getPicture())}}">
+                    
+                    {% if links is defined and links is iterable %}
+                        <div class="row mt-2">
+                            {% for link in links %}
+                                <div class="col-sm-4 col-md-4">
+                                    <a class="nav-link card-custom-link" href="{{ link.getLink() }}" target="_blank" >
+                                        {% if link.getName() is empty %}
+                                            Nieznane źródło
+                                        {% else %}
+                                            {{ link.getName() }}
+                                        {% endif %}
+                                    </a>
+                                </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="card episode-description-card mb-3 mt-3">
+                        <div class="card-body">
+                            <h4>{{ show.getName() }} - {{ episode.title }} <span class="text-grey-dark">#Odcinek {{ episode.episode }}</span></h4>
+                            <p>
+                                {% if episode.description is null or episode.description is empty %}
+                                    {{ show.getDescription() }}
+                                {% else %}
+                                    {{ episode.description }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% else %} 
+                <h3 class="mt-5 col-xs-4 offset-md-2">Ten odcinek nie został jeszcze dodany</h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
