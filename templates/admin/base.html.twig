@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel Administratora{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/admin/side_menu.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/admin/styles.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+    {% block body %}
+        <div class="wrapper">
+            {{ include('admin/_side_menu.html.twig') }}
+            
+            <div id="content">
+            
+                {{ include('admin/_horizontal_menu.html.twig') }}
+                
+                {% block admin_messages %} 
+                    {% if app.session.flashBag.has('admin_success') %}
+                        {% for msg in app.session.flashBag.get('admin_success') %}
+                            <div class="alert alert-success mt-3">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if app.session.flashBag.has('admin_error') %}
+                        {% for msg in app.session.flashBag.get('admin_error') %}
+                            <div class="alert alert-danger mt-3">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endblock %}
+
+
+                {% block content %}
+
+                {% endblock %}
+
+            </div>
+        </div>
+    {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        let loader = setInterval(() => {
+            if (document.readyState !== "complete") return;
+            clearInterval(loader);
+
+            let sidebarCollapse = document.getElementById('sidebarCollapse');
+
+            if (sidebarCollapse !== undefined)
+            {
+                sidebarCollapse.addEventListener('click', () => {
+                    let sidebar = document.getElementById('sidebar');
+
+                    if (sidebar.classList.contains('active'))
+                    {
+                        sidebar.classList.remove('active');
+                        sidebarCollapse.classList.remove('active');
+                    }
+                    else 
+                    {
+                        sidebar.classList.add('active');
+                        sidebarCollapse.classList.add('active');
+                    }
+                });
+
+            }
+         }, 300);
+    </script>
+{% endblock %}

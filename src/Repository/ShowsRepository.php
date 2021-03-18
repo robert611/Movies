@@ -68,4 +68,25 @@ class ShowsRepository extends ServiceEntityRepository
 
         return $stmt->fetch();
     }
+
+    public function checkIfTableExists(string $tableName): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM information_schema.tables WHERE table_schema = :table_schema 
+            AND table_name = :table_name LIMIT 1";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['table_schema' => 'movies', 'table_name' => $tableName]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+        }
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }

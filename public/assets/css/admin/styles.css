@@ -1,0 +1,47 @@
+.navbar {
+    margin-bottom: 0px!important;
+}
+
+.website-overview > div .card {
+    height: 180px;
+    text-align: center;
+}
+
+.website-overview > div .card > .card-body > h4 {
+    margin-top: 25px;
+}
+
+.admin-layout-color {
+    background-color: #272c33!important;
+    color: white;
+    border-color: #272c33!important;
+}
+
+.delete-link-form-button {
+    color: white!important;
+}
+
+.delete-link-modal-trigger {
+    color: white!important;
+}
+
+.undecorate-link {
+    color: white!important;
+    text-decoration: none!important;
+}
+
+.mt-1 {
+    margin-top: 4px!important;
+}
+
+.navbar-collapse.collapse.show 
+{
+    margin-top: 15px;
+}
+
+@media only screen and (min-width: 1220px) {
+
+    .search-show-visits-form {
+        margin-left: auto;
+    }
+}

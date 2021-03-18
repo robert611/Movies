@@ -1,0 +1,26 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3 class="mb-0">
+            <i class="menu-icon fa fa-dashboard"></i> 
+            <a href="{{ path('admin') }}" class="undecorate-link">Dashboard</a>
+        </h3>
+    </div>
+
+    <ul class="list-unstyled components sidebar-list">
+        {% for menuItem in ea.mainMenu.items %}
+            <li>
+                <a href="{{ menuItem.linkUrl }}">
+                    <i class="{{ menuItem.icon }}"></i>
+                    {{ menuItem.label }}
+                </a>
+            </li>
+        {% endfor %}
+
+        <li>
+            <a href="{{ path('admin_show_create') }}">
+                <i class="fa fa-plus"></i>
+                Dodaj serial
+            </a>
+        </li>
+    </ul>
+</nav>

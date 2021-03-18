@@ -1,0 +1,55 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <div class="contianer-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 mt-3 mb-3">
+                <div class="card">
+                    <div class="card-header admin-layout-color p-3">
+                        Add new show
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                            <div class="form-group mb-3">
+                                {{ form_label(form.name, 'Show name', {'label_attr': { 'class' : 'mb-1' }}) }}
+                                {{ form_widget(form.name, {'attr': { 'class' : 'form-control' }}) }}
+                                <div class="error-msg form-error mt-1">
+                                    {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                {{ form_label(form.original_name, 'Show orginal name', {'label_attr': { 'class' : 'mb-1' }}) }}
+                                {{ form_widget(form.original_name, {'attr': { 'class' : 'form-control' }}) }}
+                                <div class="error-msg form-error mt-1">
+                                    {{ form_errors(form.original_name) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                {{ form_label(form.picture, 'Show Picture', {'label_attr': { 'class' : 'mb-1' }}) }}
+                                <div class="form-file">
+                                    {{ form_widget(form.picture, {'attr': { 'class' : 'form-file-input' }}) }} <br>
+                                    <small id="fileHelp" class="form-text text-muted">Acceptable picture formats: png, jpg, jpeg.</small>
+                                </div>
+                                <div class="error-msg form-error mt-1">
+                                    {{ form_errors(form.picture) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                {{ form_label(form.description, 'Show Description', {'label_attr': { 'class' : 'mb-1' }}) }}
+                                {{ form_widget(form.description, {'attr': { 'class' : 'form-control' }}) }}
+                                <div class="error-msg form-error mt-1">
+                                    {{ form_errors(form.description) }}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary admin-layout-color">Submit</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}   

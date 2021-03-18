@@ -135,7 +135,7 @@ class Shows
         return $this->updated_at ? $this->updated_at : new \DateTime();
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
