@@ -31,6 +31,18 @@ class ShowPicturesService
         return true;
     }
 
+    public function deletePicture(string $path): bool
+    {
+        if (file_exists($path) && is_file($path))
+        {
+            unlink($path);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function isNameAlreadyTaken(object $picture, string $path): bool
     {
         $newFilename = $this->getPictureNewFileName($picture);

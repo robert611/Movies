@@ -49,7 +49,23 @@
                         {{ form_end(form) }}
                     </div>
                 </div>
+
+                <div class="card mt-5">
+                    <div class="card-header admin-layout-color p-3">
+                        Delete given show database table and picture
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ path('admin_show_delete_table' )}}">
+                            <div class="form-group mb-3">
+                                <label for="show-database-table-name" class="mb-1">Show database table name</label>
+                                <input type="text" class="form-control" name="show_database_table_name" id="show-database-table-name">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary admin-layout-color" onClick="return confirm('Are you sure? This change cannot be restored.')">Submit</button>
+                        </form> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}   
+{% endblock %}

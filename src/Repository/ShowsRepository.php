@@ -89,4 +89,20 @@ class ShowsRepository extends ServiceEntityRepository
 
         return false;
     }
+
+    public function deleteShowDatabaseTable(string $tableName): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "DROP table ${tableName}";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return true;
+    }
 }
