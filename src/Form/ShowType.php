@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ShowType extends AbstractType
 {
@@ -23,8 +24,9 @@ class ShowType extends AbstractType
                         'max' => 150,
                         'minMessage' => 'Nazwa musi składać się z przynajmniej {{ limit }} znaków',
                         'maxMessage' => 'Nazwa nie może się składać z więcej niz {{ limit }} znaków',
-                    ])
-                ]
+                    ]),
+                    new NotBlank()
+                ],
             ])
             ->add('original_name', TextType::class,  [
                 'constraints' => [
@@ -33,8 +35,9 @@ class ShowType extends AbstractType
                         'max' => 150,
                         'minMessage' => 'Nazwa musi składać się z przynajmniej {{ limit }} znaków',
                         'maxMessage' => 'Nazwa nie może się składać z więcej niz {{ limit }} znaków',
-                    ])
-                ]
+                    ]),
+                    new NotBlank()
+                ],
             ])
             ->add('picture', FileType::class, [
                 'constraints' => [
@@ -42,10 +45,14 @@ class ShowType extends AbstractType
                         'maxSize' => '4096k', 
                         'mimeTypesMessage' => 'Proszę przesyłać tylko zdjęcia'
                     ]),
+                    new NotBlank()
                 ],
-                'required' => true
             ])
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ])
         ;
     }
 
