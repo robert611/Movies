@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\ShowPicturesService;
+use App\Service\AdminVisitorService;
 use App\Form\ShowType;
 use App\Entity\Shows;
 use App\Entity\ShowLinks;
@@ -18,7 +19,6 @@ use App\Entity\ShowRanking;
 use App\Entity\User;
 use App\Entity\Visitor;
 use App\Entity\PageVisitors;
-
 
 class DashboardController extends AbstractDashboardController
 {
@@ -80,11 +80,30 @@ class DashboardController extends AbstractDashboardController
         return $this->render('admin/create_show.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @Route("/admin/visitors/page/filtered/{date}", name="admin_visitors_page_filtered")
+     */
+    public function filteredPageVisitors(?string $date = null, Request $request, AdminVisitorService $adminVisitorService): Response
+    {
+        $orderBy = $request->query->get('orderBy');
+
+        if (is_null($date)) {
+            $date = $this->getDoctrine()->getRepository(PageVisitors::class)->findAll()[0]->getDate();
+        } else {
+            $date = new \DateTime($date);
+        }
+
+        $pageVisitors = $adminVisitorService->getPageVisitorsBy($orderBy, $date);
+
+        return $this->render('admin/filtered_page_visitors.html.twig', ['pageVisitors' => $pageVisitors, 'date' => $date, 'orderBy' => $orderBy]);
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Movies');
-    }
+            ->setTitle('Movies')
+            ->disableUrlSignatures();
+    }   
 
     public function configureMenuItems(): iterable
     {

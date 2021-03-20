@@ -1,0 +1,97 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/admin/page_visitors_filter.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/redirect_to_specific_date_visits.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {% if pageVisitors is not iterable %}
+        <div class="alert alert-danger">
+            <h5>An error occured while fetching visits for particular subpages, please try later</h5>
+        </div>
+    {% else %}
+        <div class="container-fluid">
+            <div class="mt-3">
+                <form class="d-flex align-items-center width-fit-content my-2 my-lg-0">
+                    <input class="form-control my-md-2 mt-1 me-2" id="search-date-form-input" placeholder="yyyy-mm-dd" aria-label="Search">
+                    <button class="btn btn-outline-success mt-1 my-md-2" id="search-date-form-button" type="submit">Go</button>
+                </form>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <a href="{{ path('admin_visitors_page_filtered', {'date': date.format('Y-m-d'), 'orderBy': 'displays' }) }}" class="btn btn-outline-dark mr-1 mt-1">Default</a>
+                    <a href="{{ path('admin_visitors_page_filtered', {'date': date.format('Y-m-d'), 'orderBy': 'allShowEpisodesDisplays' }) }}" class="btn btn-outline-dark mt-1 mr-1">Order by all displays for given show</a>
+                </div>
+
+                <div class="col-md-6">
+                    {% if orderBy == 'allShowEpisodesDisplays' %}
+                        <form class="d-flex align-items-center search-show-visits-form my-2 my-lg-0">
+                            <input class="form-control my-md-2 mt-1 me-2" id="search-form-input-show-name" type="search" placeholder="Show name" aria-label="Search">
+                            <button class="btn btn-outline-success mt-1 my-md-2" id="search-show-visits-button" type="submit">Search</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-header admin-layout-color">
+                Show list of visits for particular subpage for date: {{ date.format('Y-m-d') }}
+            </div>
+            <div class="card-body">
+                <div id="search-show-result">
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="margin-bottom: 0px!important">
+                    {% if pageVisitors[0]['show'] is not defined %}
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>  
+                                <th scope="col">Url</th>
+                                <th scope="col">Show Name</th>
+                                <th scope="col">Episode Id</th>
+                                <th scope="col">Displays</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for page in pageVisitors %}
+                                <tr>
+                                    <td>{{ page.id }}</td>
+                                    <td>{{ page.url }}</td>
+                                    <td>{{ page.showName }}</td>
+                                    <td>{{ page.episodeId }}</td>
+                                    <td>{{ page.displays }}</td>                     
+                                    <td>{{ page.date.format('Y-m-d') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% else %}
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>  
+                                <th scope="col">Show Name</th>
+                                <th scope="col">Displays</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, page in pageVisitors %}
+                                <tr>
+                                    <td>{{ key + 1 }}</td>
+                                    <td class="show-name">{{ page.show }}</td>
+                                    <td>{{ page.visits }}</td>                     
+                                    <td>{{ date.format('Y-m-d') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+

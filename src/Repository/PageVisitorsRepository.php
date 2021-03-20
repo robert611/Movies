@@ -18,4 +18,20 @@ class PageVisitorsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PageVisitors::class);
     }
+
+    public function findByLike(string $column, string $keyword, string $date): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM page_visitors WHERE ${column} LIKE :keyword AND date = :date";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['keyword' => '%'.$keyword.'%', 'date' => $date]);
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetchAll();
+    }
 }
