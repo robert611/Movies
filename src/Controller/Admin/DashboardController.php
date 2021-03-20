@@ -16,6 +16,9 @@ use App\Entity\ShowLinks;
 use App\Entity\LatestEpisodes;
 use App\Entity\ShowRanking;
 use App\Entity\User;
+use App\Entity\Visitor;
+use App\Entity\PageVisitors;
+
 
 class DashboardController extends AbstractDashboardController
 {
@@ -90,5 +93,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Latest Episodes', 'fas fa-video', LatestEpisodes::class);
         yield MenuItem::linkToCrud('Shows Ranking', 'fas fa-list', ShowRanking::class);
         yield MenuItem::linkToCrud('Shows Links', 'fa fa-link', ShowLinks::class);
+        yield MenuItem::linkToCrud('Visitors', 'fas fa-user-plus', Visitor::class);
+        yield MenuItem::linkToCrud('Page Visitors', 'fas fa-address-book', PageVisitors::class);
     }
 }
