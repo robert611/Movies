@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Shows;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\ShowPicturesService;
+use App\Service\UploadFileService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ class ShowsCrudController extends AbstractCrudController
     /**
      * @Route("/admin/show/delete/table", name="admin_show_delete_table")
      */
-    public function deleteShowDatabaseTable(Request $request, ShowPicturesService $showPicturesService): Response
+    public function deleteShowDatabaseTable(Request $request, UploadFileService $uploadFileService): Response
     {
         $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
 
@@ -44,7 +44,7 @@ class ShowsCrudController extends AbstractCrudController
         if ($show) {
             $showPictureName = $show->getPicture();
 
-            if (!$showPicturesService->deletePicture($this->getParameter('shows_pictures_directory') . "/" . $showPictureName)) {
+            if (!$uploadFileService->deleteFile($this->getParameter('shows_pictures_directory') . "/" . $showPictureName)) {
                 $this->addFlash('admin_error', "For some reason show picture was not deleted");
             } else {
                 $this->addFlash('admin_success', "Picture of the show: {$showDatabaseTableName} has been deleted");

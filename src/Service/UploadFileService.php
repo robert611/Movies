@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class ShowPicturesService
+class UploadFileService
 {
     private SluggerInterface $slugger;
 
@@ -13,12 +13,12 @@ class ShowPicturesService
         $this->slugger = $slugger;
     }
 
-    public function uploadPicture(object $picture, string $path): bool
+    public function uploadFile(object $file, string $path): bool
     {
-        $newFilename = $this->getPictureNewFileName($picture);
+        $newFilename = $this->getNewFileName($file);
 
         try {
-            $picture->move(
+            $file->move(
                 $path,
                 $newFilename
             );
@@ -31,7 +31,7 @@ class ShowPicturesService
         return true;
     }
 
-    public function deletePicture(string $path): bool
+    public function deleteFile(string $path): bool
     {
         if (file_exists($path) && is_file($path))
         {
@@ -43,20 +43,20 @@ class ShowPicturesService
         return false;
     }
 
-    public function isNameAlreadyTaken(object $picture, string $path): bool
+    public function isNameAlreadyTaken(object $file, string $path): bool
     {
-        $newFilename = $this->getPictureNewFileName($picture);
+        $newFilename = $this->getNewFileName($file);
 
-        return file_exists($path."/".$newFilename);
+        return file_exists($path . "/" .$newFilename);
     }
 
-    private function getPictureNewFileName(object $picture): string
+    private function getNewFileName(object $file): string
     {
-        $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
         // this is needed to safely include the file name as part of the URL
         $safeFilename = $this->slugger->slug($originalFilename);
-        $newFilename = $safeFilename.'.'.$picture->guessExtension();
+        $newFilename = $safeFilename.'.'.$file->guessExtension();
 
         return $newFilename;
     }

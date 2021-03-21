@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\ShowPicturesService;
+use App\Service\UploadFileService;
 use App\Service\AdminVisitorService;
 use App\Form\ShowType;
 use App\Entity\Shows;
@@ -33,7 +33,7 @@ class DashboardController extends AbstractDashboardController
     /**
      * @Route("/admin/show/create", name="admin_show_create")
      */
-    public function createShow(Request $request, EntityManagerInterface $entityManager, ShowPicturesService $showPicturesService): Response
+    public function createShow(Request $request, EntityManagerInterface $entityManager, UploadFileService $uploadFileService): Response
     {
         $form = $this->createForm(ShowType::class);
         $form->handleRequest($request);
@@ -49,7 +49,7 @@ class DashboardController extends AbstractDashboardController
                 return $this->redirectToRoute('admin_show_create');
             }
 
-            if ($showPicturesService->isNameAlreadyTaken($formData['picture'], $this->getParameter('shows_pictures_directory'))) {
+            if ($uploadFileService->isNameAlreadyTaken($formData['picture'], $this->getParameter('shows_pictures_directory'))) {
                 $this->addFlash('admin_error', "Picture with given name already exists");
 
                 return $this->redirectToRoute('admin_show_create');
@@ -70,7 +70,7 @@ class DashboardController extends AbstractDashboardController
 
             $showRepostiory->createShowTable($formData['original_name']);
 
-            $showPicturesService->uploadPicture($formData['picture'], $this->getParameter('shows_pictures_directory'));
+            $uploadFileService->uploadFile($formData['picture'], $this->getParameter('shows_pictures_directory'));
 
             $this->addFlash('admin_success', 'Show has been created');
 
@@ -96,6 +96,31 @@ class DashboardController extends AbstractDashboardController
         $pageVisitors = $adminVisitorService->getPageVisitorsBy($orderBy, $date);
 
         return $this->render('admin/filtered_page_visitors.html.twig', ['pageVisitors' => $pageVisitors, 'date' => $date, 'orderBy' => $orderBy]);
+    }
+
+    /**
+     * @Route("/admin/upload/file", name="admin_upload_file")
+     */
+    public function uploadFile(Request $request, UploadFileService $uploadFileService)
+    {
+        $path = $request->request->get('path');
+        $file = $request->files->get('file');
+
+        $pathToFolderToWriteFileIn = $this->getParameter('pictures_directory') . "/" . $path;
+
+        if ($uploadFileService->isNameAlreadyTaken($file, $pathToFolderToWriteFileIn)) {
+            $this->addFlash('admin_error', "File with given name already exists");
+
+            return $this->redirectToRoute('admin');
+        }
+
+        if (!$uploadFileService->uploadFile($file, $pathToFolderToWriteFileIn)) {
+            $this->addFlash('admin_error', 'Failure, file has not been uploaded');
+        } else {
+            $this->addFlash('admin_success', 'File has been uploaded');
+        }
+
+        return $this->redirectToRoute('admin');
     }
 
     public function configureDashboard(): Dashboard
