@@ -29,7 +29,7 @@ class LatestEpisodesRepository extends ServiceEntityRepository
 
         foreach ($latestEpisodes as $episode)
         {
-            $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, s.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.episode = :episode_id";
+            $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, e.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.id = :episode_id";
 
             try {
                 $stmt = $conn->prepare($sql);
@@ -48,7 +48,7 @@ class LatestEpisodesRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT * FROM latest_episodes ORDER BY id DESC LIMIT 15";
+        $sql = "SELECT * FROM latest_episodes ORDER BY id DESC LIMIT ${numberOfEpisodes}";
 
         try {
             $stmt = $conn->prepare($sql);
