@@ -28,7 +28,7 @@ class ShowController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        $thisEpisode = $showsRepository->findEpisode($showTableName, $episodeId);
+        $thisEpisode = $showsRepository->findEpisode((string) $showTableName, (int) $episodeId);
 
         if (!$thisEpisode) {
             $this->addFlash('error', 'Nie udało się nam znaleźć tego odcinka');
