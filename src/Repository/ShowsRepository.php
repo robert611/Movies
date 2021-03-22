@@ -36,6 +36,44 @@ class ShowsRepository extends ServiceEntityRepository
         return true;
     }
 
+    public function saveShowEpisode(string $showDatabaseTableName, array $episodeData): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $createdAt = date("Y-m-d H:i:s");
+
+        $sql = "INSERT INTO {$showDatabaseTableName} (id, title, season, episode, description, user_id, created_at, updated_at) VALUES 
+            (null, :title, :season, :episode, :description, :user_id, :created_at, null)";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['title' => $episodeData['title'], 'season' => $episodeData['season'], 'episode' => $episodeData['episode_number'], 'description' => $episodeData['description'],
+                'user_id' => $episodeData['user_id'], 'created_at' => $createdAt]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getLastAddedShowEpisode(string $showDatabaseTableName): ?array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM ${showDatabaseTableName} ORDER BY id DESC LIMIT 1";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetch();
+    }
+
     public function findShowAllEpisodesBy(string $showName, string $searchedTerm): array
     {
         $conn = $this->getEntityManager()->getConnection();

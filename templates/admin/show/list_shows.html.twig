@@ -1,0 +1,61 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <div class="col-xs-12 col-md-12 mt-3 mb-3">
+        <div class="card" style="margin-bottom: 20px">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="margin-bottom: 0px!important">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Table Name</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Picture</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Display Episodes</th>
+                                <th scope="col">Add Episode</th>
+                                <th scope="col">Edit Episode</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for show in shows %}
+                            <tr>
+                                <th scope="row">{{ show.id }}</th>
+                                <td>{{ show.name }}</td>
+                                <td>{{ show.databaseTableName }}</td>
+                                <td>{{ show.user.username }}</td>
+                                <td>{{ show.picture }}</td>
+                                <td>{{ show.createdAt.format('Y-m-d') }}</td>
+                                <td class="text-center">
+                                    <a href="{ { path('admin_manage_episodes_showlist', {'showTableName': show.databaseTableName }) }}">
+                                        <button class="btn btn-outline-success mb-2">
+                                            <i class="fa fa-eye" aria-hidden="true"></i> Display
+                                        </button>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ path('admin_show_episode_create', {'showDatabaseTableName': show.databaseTableName}) }}">
+                                        <button class="btn btn-outline-dark">
+                                            <i class="fa fa-plus" aria-hidden="true"></i> Add
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>    
+                                    <a href="{ { path('admin_manage_shows_edit', {'id': show.getId() }) }}">
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

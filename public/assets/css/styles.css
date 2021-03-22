@@ -26,10 +26,6 @@ section#main-container {
     height: 45px;
 }
 
-.center {
-    text-align: center;
-}
-
 .horizontal-margin-none {
     margin-left: 0px!important;
     margin-right: 0px!important;

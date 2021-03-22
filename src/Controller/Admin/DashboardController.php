@@ -11,7 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\UploadFileService;
 use App\Service\AdminVisitorService;
+use App\Service\EpisodeLinkService;
 use App\Form\ShowType;
+use App\Form\EpisodeType;
 use App\Entity\Shows;
 use App\Entity\ShowLinks;
 use App\Entity\LatestEpisodes;
@@ -77,7 +79,66 @@ class DashboardController extends AbstractDashboardController
             return $this->redirectToRoute('admin_show_create');
         }
 
-        return $this->render('admin/create_show.html.twig', ['form' => $form->createView()]);
+        return $this->render('admin/show/create_show.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/admin/show/list", name="admin_show_list")
+     */
+    public function listShows(): Response
+    {
+        $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
+
+        $shows = $showRepostiory->findAll();
+
+        return $this->render('admin/show/list_shows.html.twig', ['shows' => $shows]);
+    }
+
+    /**
+     * @Route("/admin/show/episode/create/{showDatabaseTableName}", name="admin_show_episode_create")
+     */
+    public function createShowEpisode(string $showDatabaseTableName, Request $request, EntityManagerInterface $entityManager, EpisodeLinkService $episodeLinkService): Response
+    {
+        $form = $this->createForm(EpisodeType::class);
+        $form->handleRequest($request);
+
+        $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
+    
+        if (!$showRepostiory->checkIfTableExists($showDatabaseTableName)) {
+            $this->addFlash('admin_error', "Show with database table name: {$showDatabaseTableName} does not exist");
+
+            return $this->redirectToRoute('admin_show_list');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $formData['user_id'] = $this->getUser()->getId();
+
+            if (!$showRepostiory->saveShowEpisode($showDatabaseTableName, $formData)) {
+                $this->session->getFlashBag()->add('admin_error', 'Episode could not be added, due to problem with sql query');
+
+                return $this->render('admin/show/create_episode.html.twig', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
+            }
+
+            $episode = $showRepostiory->getLastAddedShowEpisode($showDatabaseTableName);
+
+            $episodeLinkService->saveEpisodeLinks($request, $showDatabaseTableName, $episode['id']);
+
+            $latestEpisode = new LatestEpisodes();
+
+            $latestEpisode->setShowDatabaseTableName($showDatabaseTableName);
+            $latestEpisode->setEpisodeId($episode['id']);
+
+            $entityManager->persist($latestEpisode);
+
+            $entityManager->flush();
+
+            $this->addFlash('admin_success', 'Episode has been successfuly added');
+
+            return $this->redirectToRoute('admin_show_episode_create', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
+        }
+        
+        return $this->render('admin/show/create_episode.html.twig', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
     }
 
     /**
