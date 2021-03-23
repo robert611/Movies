@@ -4,16 +4,19 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Repository\ShowLinksRepository;
 use App\Entity\ShowLinks;
 
 class EpisodeLinkService
 {
     private EntityManagerInterface $entityManager;
+    private ShowLinksRepository $showLinksRepository;
     private Session $session;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->showLinksRepository = $this->entityManager->getRepository(ShowLinks::class);
         $this->session = new Session();
     }
 
@@ -50,12 +53,19 @@ class EpisodeLinkService
 
             $this->entityManager->persist($showLink);
 
-            $this->session->getFlashBag()->add('admin_success', "Link with name: ${linkUrlName} has been added");
+            $this->session->getFlashBag()->add('admin_success', "Link with name: ${linkUrlName} has been added or preserved if you are updating episode");
 
             $savedLinkUrls[] = $linkUrl;
         }
 
         $this->entityManager->flush();
+    }
+
+    public function updateLinks(object $request, string $showDatabaseTableName, int $episodeId)
+    {
+        $this->showLinksRepository->deleteShowEpisodeLinks($showDatabaseTableName, $episodeId);
+
+        $this->saveEpisodeLinks($request, $showDatabaseTableName, $episodeId);
     }
 
     public function validateData(string $linkUrl, string $linkUrlName): bool

@@ -1,0 +1,79 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/admin/delete_link_form.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/add_episode_link.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-4 mt-3">
+        <div class="card-header admin-layout-color">
+            Edit episode of {{ showDatabaseTableName }}
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+                <div class="form-group mb-3">
+                    {{ form_label(form.title, 'Title', {'label_attr': { 'class' : 'mb-1' }}) }}
+                    {{ form_widget(form.title, {'attr': { 'class' : 'form-control', 'value' : episode.title }}) }}
+                    <div class="error-msg form-error mt-1">
+                        {{ form_errors(form.title) }}
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.season, 'Season', {'label_attr': { 'class' : 'mb-1' }}) }}
+                    {{ form_widget(form.season, {'attr': { 'class' : 'form-control', 'value' : episode.season }}) }}
+                    <div class="error-msg form-error mt-1">
+                        {{ form_errors(form.season) }}
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.episode_number, 'Episode Number', {'label_attr': { 'class' : 'mb-1' }}) }}
+                    {{ form_widget(form.episode_number, {'attr': { 'class' : 'form-control', 'value' : episode.episode }}) }}
+                    <div class="error-msg form-error mt-1">
+                        {{ form_errors(form.episode_number) }}
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': { 'class' : 'mb-1' }}) }}
+                    {{ form_widget(form.description, {'attr': { 'class' : 'form-control', 'rows' : 3 }}) }}
+                    <div class="error-msg form-error mt-1">
+                        {{ form_errors(form.description) }}
+                    </div>
+                </div>
+
+                <button id="add-link-input-row-button" class="btn btn-primary mt-2 mb-2">
+                    <i class="fa fa-plus"></i>
+                </button>
+
+                <div id="link-input-rows-container" class="mb-3 mt-2">
+                    {% for key, link in links %}
+                        <div class="row mb-3" {% if loop.last == true %} id="last-added-link-input-row" {% endif %} data-number="{{ key + 1 }}">
+                            <div class="form-group col-md-6">
+                                <label>Url</label>
+                                <input type="text" name="links_urls[]" class="form-control" value="{{ link.link }}">
+                            </div>
+                            <div class="form-group col-md-5">	
+                                <label>Name</label>					
+                                <input type="text" name="links_urls_names[]" class="form-control" value="{{ link.name }}">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="embedInput">Delete</label>
+                                <a class="btn btn-danger form-control delete-link-input-row-button" data-number="{{ key + 1 }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ path('admin_show_list') }}"><button type="button" class="btn btn-outline-success">Go Back</button></a>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

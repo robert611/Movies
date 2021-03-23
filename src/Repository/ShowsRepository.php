@@ -58,6 +58,27 @@ class ShowsRepository extends ServiceEntityRepository
         return true;
     }
 
+    public function updateShowEpisode(string $showDatabaseTableName, array $episodeData): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $updatedAt = date("Y-m-d H:i:s");
+
+        $sql = "UPDATE {$showDatabaseTableName} SET title = :title, season = :season, episode = :episode, description = :description, user_id = :user_id, updated_at = :updated_at WHERE id = :id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['title' => $episodeData['title'], 'season' => $episodeData['season'], 'episode' => $episodeData['episode_number'], 'description' => $episodeData['description'],
+                'user_id' => $episodeData['user_id'], 'updated_at' => $updatedAt, 'id' => $episodeData['id']]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function getLastAddedShowEpisode(string $showDatabaseTableName): ?array
     {
         $conn = $this->getEntityManager()->getConnection();

@@ -11,6 +11,8 @@ function deleteLinkInputRow(e)
 {
     e.preventDefault();
 
+    if (!confirm('Are you sure? This change cannot be restored.')) return;
+
     /* It has to be (this) because it refers to anchor element even if I will click directly on an icon element in an anchor element */
     let formNumber = this.getAttribute('data-number');
   
@@ -28,7 +30,16 @@ function deleteLinkInputRow(e)
     }
 
     /* If this is the last element, than it contains last-added-link-input-row id and this id has to be assign to new last element */
-    if (element.getAttribute('id') == 'last-added-link-input-row') element.previousSibling.setAttribute('id', 'last-added-link-input-row');
+    if (element.getAttribute('id') == 'last-added-link-input-row')
+    {
+        let previousSibling = element.previousSibling;
+
+        while (previousSibling.nodeName == "#text") {
+            previousSibling = previousSibling.previousSibling;
+        }
+
+        previousSibling.setAttribute('id', 'last-added-link-input-row');
+    }
 
     /* Create an effect of deleting element, after that change display to none, so element will not leave any space */
     element.style.transitionTimingFunction = 'ease-in';
@@ -40,3 +51,5 @@ function deleteLinkInputRow(e)
         element.remove();
     }, 610);
 }
+
+updateLinkInputRowDeleteButtons();

@@ -19,32 +19,21 @@ class ShowLinksRepository extends ServiceEntityRepository
         parent::__construct($registry, ShowLinks::class);
     }
 
-    // /**
-    //  * @return ShowLinks[] Returns an array of ShowLinks objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function deleteShowEpisodeLinks(string $showDatabaseTableName, int $episodeId): bool
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?ShowLinks
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "DELETE FROM show_links WHERE show_database_table_name = :show_database_table_name AND episode_id = :episode_id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['show_database_table_name' => $showDatabaseTableName, 'episode_id' => $episodeId]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+
+            return false;
+        }
+
+        return true;
     }
-    */
 }

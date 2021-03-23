@@ -142,6 +142,56 @@ class DashboardController extends AbstractDashboardController
     }
 
     /**
+     * @Route("/admin/show/episode/edit/{showDatabaseTableName}/{episodeId}", name="admin_show_episode_edit")
+     */
+    public function editShowEpisode(string $showDatabaseTableName, string $episodeId, Request $request, EpisodeLinkService $episodeLinkService): Response
+    {
+        $form = $this->createForm(EpisodeType::class);
+        $form->handleRequest($request);
+
+        $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
+        $showLinksRepository = $this->getDoctrine()->getRepository(ShowLinks::class);
+
+        if (!$showRepostiory->checkIfTableExists($showDatabaseTableName)) {
+            $this->addFlash('admin_error', "Show with database table name: {$showDatabaseTableName} does not exist");
+
+            return $this->redirectToRoute('admin_show_list');
+        }
+        
+        $episode = $showRepostiory->findEpisode($showDatabaseTableName, (int) $episodeId);
+
+        if (!$episode) {
+            $this->addFlash('admin_error', "There is no episode with id: ${episodeId} of table ${showDatabaseTableName}");
+            return $this->redirectToRoute('admin_show_list');
+        }
+
+        $episodeLinks = $showLinksRepository->findBy(['show_database_table_name' => $showDatabaseTableName, 'episode_id' => $episodeId]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $formData['user_id'] = $this->getUser()->getId();
+            $formData['id'] = $episodeId;
+
+            if ($showRepostiory->updateShowEpisode($showDatabaseTableName, $formData))
+            {
+                $episodeLinkService->updateLinks($request, (string) $showDatabaseTableName, (int) $episode['id']);
+
+                $this->addFlash('admin_success', 'Episode has been successfuly updated');
+            }
+            else
+            {
+                $this->addFlash('admin_error', 'Episode could not be updated, due to a problem with sql query');
+            }
+
+            return $this->redirectToRoute('admin_show_episode_edit', ['showDatabaseTableName' => $showDatabaseTableName, 'episodeId' => $episodeId]);
+        }
+
+        $form->get('description')->setData($episode['description']);
+
+        return $this->render('admin/show/edit_episode.html.twig', ['episode' => $episode, 'links' => $episodeLinks, 'showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/admin/visitors/page/filtered/{date}", name="admin_visitors_page_filtered")
      */
     public function filteredPageVisitors(?string $date = null, Request $request, AdminVisitorService $adminVisitorService): Response
