@@ -3,9 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Shows;
+use App\Entity\LatestEpisodes;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\UploadFileService;
+use App\Service\EpisodeLinkService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,6 +61,31 @@ class ShowsCrudController extends AbstractCrudController
         $this->addFlash('admin_success', "Show database table with name: {$showDatabaseTableName} has been deleted");
 
         return $this->redirectToRoute('admin_show_create');
+    }
+
+    /**
+     * @Route("/admin/show/delete/episode/{showDatabaseTableName}/{episodeId}", name="admin_show_delete_episode")
+     */
+    public function deleteShowEpisode(string $showDatabaseTableName, string $episodeId, EntityManagerInterface $entityManager, EpisodeLinkService $episodeLinkService): Response
+    {
+        $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
+        $latestEpisodesRepository =  $this->getDoctrine()->getRepository(LatestEpisodes::class);
+
+        if (!$showRepostiory->checkIfTableExists($showDatabaseTableName)) {
+            $this->addFlash('admin_error', "Table of the show with the name: {$showDatabaseTableName} does not exist");
+
+            return $this->redirectToRoute('admin_show_episodes_list', ['showDatabaseTableName' => $showDatabaseTableName]);
+        }
+
+        $showRepostiory->deleteShowEpisode($showDatabaseTableName, (int) $episodeId);
+
+        $episodeLinkService->deleteShowEpisodeLinks($showDatabaseTableName, (int) $episodeId);
+
+        $latestEpisodesRepository->deleteLatestEpisode($showDatabaseTableName, (int) $episodeId);
+
+        $this->addFlash('admin_success', "Episode of table ${showDatabaseTableName} with an id ${episodeId} has been deleted");
+
+        return $this->redirectToRoute('admin_show_episodes_list', ['showDatabaseTableName' => $showDatabaseTableName]);
     }
 
     /*

@@ -68,6 +68,18 @@ class EpisodeLinkService
         $this->saveEpisodeLinks($request, $showDatabaseTableName, $episodeId);
     }
 
+    public function deleteShowEpisodeLinks(string $showDatabaseTableName, int $episodeId): void
+    {
+        $episodeLinks = $this->showLinksRepository->findBy(['show_database_table_name' => $showDatabaseTableName, 'episode_id' => $episodeId]);
+
+        foreach ($episodeLinks as $link)
+        {
+            $this->entityManager->remove($link);
+        }
+
+        $this->entityManager->flush();
+    }
+
     public function validateData(string $linkUrl, string $linkUrlName): bool
     {
         if ($linkUrl == null or $linkUrlName == null) return false;

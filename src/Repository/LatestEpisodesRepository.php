@@ -59,4 +59,22 @@ class LatestEpisodesRepository extends ServiceEntityRepository
 
         return $stmt->fetchAll();
     }
+
+    public function deleteLatestEpisode(string $showDatabaseTableName, int $episodeId): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "DELETE FROM latest_episodes WHERE show_database_table_name = :show_database_table_name AND episode_id = :episode_id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['show_database_table_name' => $showDatabaseTableName, 'episode_id' => $episodeId]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
 }

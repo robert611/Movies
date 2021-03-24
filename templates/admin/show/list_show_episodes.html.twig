@@ -43,10 +43,9 @@
                                     <a href="{{ path('admin_show_episode_edit', {'showDatabaseTableName': showDatabaseTableName, 'episodeId': episode.id}) }}" class="btn btn-outline-secondary mt-1">
                                         <i class="fa fa-edit mt-1" aria-hidden="true"></i> Edit
                                     </a>
-                                    <button data-seriesName="{{ showDatabaseTableName }}" data-episodeId="{{ episode.id }}" data-toggle="modal"
-                                            class="btn btn-outline-danger delete-episode-button mt-1">
+                                    <a href="{{ path('admin_show_delete_episode', {'showDatabaseTableName': showDatabaseTableName, 'episodeId': episode.id}) }}" class="btn btn-outline-danger mt-1" onClick="return confirm('Are you sure? This action cannot be restored.')">
                                         <i class="fa fa-remove mt-1" aria-hidden="true"></i> Delete
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}

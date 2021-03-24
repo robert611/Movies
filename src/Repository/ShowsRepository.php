@@ -149,6 +149,24 @@ class ShowsRepository extends ServiceEntityRepository
         return false;
     }
 
+    public function deleteShowEpisode(string $showDatabaseTableName, int $episodeId): bool
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "DELETE FROM {$showDatabaseTableName} WHERE id = :id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['id' => $episodeId]);
+        } catch (DBALException $e) {
+            echo $e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function deleteShowDatabaseTable(string $tableName): bool
     {
         $conn = $this->getEntityManager()->getConnection();
