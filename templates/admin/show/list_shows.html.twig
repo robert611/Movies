@@ -30,7 +30,7 @@
                                 <td>{{ show.picture }}</td>
                                 <td>{{ show.createdAt.format('Y-m-d') }}</td>
                                 <td class="text-center">
-                                    <a href="{ { path('admin_manage_episodes_showlist', {'showTableName': show.databaseTableName }) }}">
+                                    <a href="{{ path('admin_show_episodes_list', {'showDatabaseTableName': show.databaseTableName }) }}">
                                         <button class="btn btn-outline-success mb-2">
                                             <i class="fa fa-eye" aria-hidden="true"></i> Display
                                         </button>

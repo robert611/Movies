@@ -95,6 +95,18 @@ class DashboardController extends AbstractDashboardController
     }
 
     /**
+     * @Route("/admin/show/episodes/list/{showDatabaseTableName}", name="admin_show_episodes_list")
+     */
+    public function listShowEpisodes(string $showDatabaseTableName): Response
+    {
+        $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
+
+        $showEpisodes = $showRepostiory->findShowAllEpisodesBy($showDatabaseTableName, '');
+
+        return $this->render('admin/show/list_show_episodes.html.twig', ['episodes' => $showEpisodes, 'showDatabaseTableName' => $showDatabaseTableName]);
+    }
+
+    /**
      * @Route("/admin/show/episode/create/{showDatabaseTableName}", name="admin_show_episode_create")
      */
     public function createShowEpisode(string $showDatabaseTableName, Request $request, EntityManagerInterface $entityManager, EpisodeLinkService $episodeLinkService): Response

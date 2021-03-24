@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+
+    {% if episodes is not iterable %}
+        <div class="alert alert-danger">
+            <h5>An error with fetching episodes occured, please try later.</h5>
+        </div>
+    {% else %}
+        <div class="card mt-4">
+            <div class="card-header admin-layout-color">
+                Show list of episodes of selected show.
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Season</th>
+                                <th scope="col">Episode</th>
+                                <th scope="col">User_id</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Updated At</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for episode in episodes %}
+                            <tr>
+                                <th scope="row">{{ episode.id }}</th>
+                                <td>{{ episode.title }}</td>
+                                <td>{{ episode.season }}</td>
+                                <td>{{ episode.episode }}</td>
+                                <td>{{ episode.user_id }}</td>
+                                <td>{{ episode.created_at }}</td>
+                                <td>{{ episode.updated_at }}</td>                      
+                                <td>
+                                    <a href="{{ path('show_index', {'showTableName': showDatabaseTableName, 'episodeSeason': episode.season, 'episodeId': episode.id}) }}" class="btn btn-outline-success mt-1">
+                                        <i class="fa fa-eye mt-1" aria-hidden="true"></i> Show
+                                    </a>
+                                    <a href="{{ path('admin_show_episode_edit', {'showDatabaseTableName': showDatabaseTableName, 'episodeId': episode.id}) }}" class="btn btn-outline-secondary mt-1">
+                                        <i class="fa fa-edit mt-1" aria-hidden="true"></i> Edit
+                                    </a>
+                                    <button data-seriesName="{{ showDatabaseTableName }}" data-episodeId="{{ episode.id }}" data-toggle="modal"
+                                            class="btn btn-outline-danger delete-episode-button mt-1">
+                                        <i class="fa fa-remove mt-1" aria-hidden="true"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
