@@ -17,7 +17,6 @@
                                 <th scope="col">Created At</th>
                                 <th scope="col">Display Episodes</th>
                                 <th scope="col">Add Episode</th>
-                                <th scope="col">Edit Episode</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,13 +39,6 @@
                                     <a href="{{ path('admin_show_episode_create', {'showDatabaseTableName': show.databaseTableName}) }}">
                                         <button class="btn btn-outline-dark">
                                             <i class="fa fa-plus" aria-hidden="true"></i> Add
-                                        </button>
-                                    </a>
-                                </td>
-                                <td>    
-                                    <a href="{ { path('admin_manage_shows_edit', {'id': show.getId() }) }}">
-                                        <button class="btn btn-outline-primary">
-                                            <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                         </button>
                                     </a>
                                 </td>
