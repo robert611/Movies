@@ -68,6 +68,7 @@ function createShowWidget(show)
 }
 
 fetch('/api/shows/fetch')
-    .then(response => response.json())
-    .then(json => JSON.parse(json))
+    .then(response => {
+        return response.json();
+    })
     .then(data => document.getElementById('search-show-input').addEventListener('keyup', () => findMatchingShows(data)));

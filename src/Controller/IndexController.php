@@ -36,7 +36,7 @@ class IndexController extends AbstractController
     /**
      * @Route("api/shows/fetch", name="api_shows_fetch")
      */
-    public function fetchShows(): JsonResponse
+    public function fetchShows()
     {
         $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
 
@@ -51,7 +51,7 @@ class IndexController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        return new JsonResponse($serializer->serialize($shows, 'json'));
+        return new Response($serializer->serialize($shows, 'json'));
     }
 
     /**
