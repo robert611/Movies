@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-8">
-                    {% if showsLatestEpisodes is iterable %}
+                    {% if showsLatestEpisodes is iterable and showsLatestEpisodes|length is not same as(0) %}
                         <div class="row">
                             {% for episode in showsLatestEpisodes %}
                                 <div class="xol-xs-12 col-sm-6 col-md-4">
@@ -64,6 +64,8 @@
                                 </div>
                             {% endfor %}
                         </div>
+                    {% else %}
+                        <h4 class="text-center">W ostatnim czasie nie dodano żadnego nowego odcinka</h4>
                     {% endif %}
                 </div>
             </div>
