@@ -18,8 +18,6 @@ function chooseShowsToCompare()
         })
         .then((shows) => {
 
-            shows = [JSON.parse(shows[0]), JSON.parse(shows[1])];
-
             hideRankingContainerChildren();    
 
             shows.map((show) => {

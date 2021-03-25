@@ -55,7 +55,7 @@ class ShowsRankingController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        return new JsonResponse([$serializer->serialize($showsToCompare[0], 'json'), $serializer->serialize($showsToCompare[1], 'json')]);
+        return new Response($serializer->serialize($showsToCompare, 'json'));
     }
 
     /**
