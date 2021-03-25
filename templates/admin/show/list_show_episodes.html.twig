@@ -37,7 +37,7 @@
                                 <td>{{ episode.created_at }}</td>
                                 <td>{{ episode.updated_at }}</td>                      
                                 <td>
-                                    <a href="{{ path('show_index', {'showTableName': showDatabaseTableName, 'episodeSeason': episode.season, 'episodeId': episode.id}) }}" class="btn btn-outline-success mt-1">
+                                    <a href="{{ path('show_index', {'showTableName': showDatabaseTableName, 'episodeId': episode.id}) }}" class="btn btn-outline-success mt-1">
                                         <i class="fa fa-eye mt-1" aria-hidden="true"></i> Show
                                     </a>
                                     <a href="{{ path('admin_show_episode_edit', {'showDatabaseTableName': showDatabaseTableName, 'episodeId': episode.id}) }}" class="btn btn-outline-secondary mt-1">

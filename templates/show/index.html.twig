@@ -15,7 +15,7 @@
                     <input type="hidden" id="current-season" value="{{ episode.season }}">
                     <div class="mt-2">
                         {% for season, firstEpisode in showSeasonsNumbers %}
-                            <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeSeason': season, 'episodeId': firstEpisode}) }}">
+                            <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeId': firstEpisode}) }}">
                                 <button class="btn btn-outline-secondary mt-1" id="season{{ season }}" role="button" aria-expanded="false">
                                     Sezon {{ season }}
                                 </button>
@@ -28,7 +28,7 @@
                     <div class="card-body"> 
                         <div class="mt-1 mb-1 season">
                             {% for episode in episodes %}
-                                <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeSeason': episode.season, 'episodeId': episode.id}) }}" class="nav-link side-menu card-custom-link" role="tab">
+                                <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeId': episode.id}) }}" class="nav-link side-menu card-custom-link" role="tab">
                                     <span class="text-grey-dark">#{{ episode.episode }}</span>
                                     {{ episode.title }}
                                 </a>     

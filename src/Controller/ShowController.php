@@ -12,9 +12,9 @@ use App\Entity\ShowLinks;
 class ShowController extends AbstractController
 {
     /**
-     * @Route("/show/{showTableName}/{episodeSeason}/{episodeId}", name="show_index")
+     * @Route("/show/{showTableName}/{episodeId}", name="show_index")
      */
-    public function index($showTableName, $episodeSeason = 1, $episodeId = 1): Response
+    public function index($showTableName, $episodeId = 1): Response
     {
         $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
         
@@ -41,6 +41,8 @@ class ShowController extends AbstractController
         $showService = new ShowService($showEpisodes);
 
         $showSeasonsNumbersWithSeasonFirstEpisodeId = $showService->getShowSeasonsNumbersWithSeasonFirstEpisodeId();
+
+        $episodeSeason = $thisEpisode['season'];
 
         $showSeasonEpisodes = $showService->getSeasonEpisodes($episodeSeason);
 

@@ -49,7 +49,7 @@
                                     <div class="card mb-2">
                                         <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
                                         <div class="card-body">
-                                            <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeSeason': episode.season, 'episodeId': episode.id}) }}">
+                                            <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeId': episode.id}) }}">
                                                 <h5 class="card-title">
                                                     {{ episode.show_name }}  {{ episode.title }}
                                                 </h5>
