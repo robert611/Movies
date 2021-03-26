@@ -39,12 +39,10 @@ function vote(event)
     showRankingSpinner();
 
     let pictures = document.querySelectorAll('.show-to-compare-picture img');
-    let winnerShowName = event.target.getAttribute('data-showName');
     let winnerDatabaseTableName = event.target.getAttribute('data-tableName');
 
     let data = new FormData();
 
-    data.append('show_name', winnerShowName);
     data.append('database_table_name', winnerDatabaseTableName);
 
     fetch('/ranking/vote/up', {
@@ -63,12 +61,10 @@ function vote(event)
 }
 
 function voteDown(looser) {
-    let showName = looser.getAttribute('data-showName');
     let databaseTableName = looser.getAttribute('data-tableName');
  
     let data = new FormData();
     
-    data.append('show_name', showName);
     data.append('database_table_name', databaseTableName);
 
     fetch('/ranking/vote/down', {
@@ -97,8 +93,6 @@ function createShowToCompareWidget(show)
 
     let img = document.createElement('img');
     img.setAttribute('src', '/assets/pictures/shows/' + show.picture);
-    img.setAttribute('data-id', show.id);
-    img.setAttribute('data-showName', show.name);
     img.setAttribute('data-tableName', show.databaseTableName);
 
     let titleDiv = document.createElement('div');

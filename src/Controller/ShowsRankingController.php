@@ -11,19 +11,24 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use App\Repository\ShowsRepository;
 use App\Entity\ShowRanking;
-use App\Entity\Shows;
 
 class ShowsRankingController extends AbstractController
 {
+    private ShowsRepository $showsRepository;
+
+    public function __construct(ShowsRepository $showsRepository)
+    {
+        $this->showsRepository = $showsRepository;
+    }
+
     /**
      * @Route("/api/ranking/find/shows/to/compare", name="ranking_find_shows_to_compare")
      */
     public function findShowsToCompare(): Response
     {
-        $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
-
-        $shows = $showsRepository->findAll();
+        $shows = $this->showsRepository->findAll();
 
         $showsToCompare = array(); 
 
@@ -66,26 +71,31 @@ class ShowsRankingController extends AbstractController
         $showRankingRepository = $this->getDoctrine()->getRepository(ShowRanking::class);
             
         $databaseTableName = $request->request->get('database_table_name');
-        $showName = $request->request->get('show_name');
 
-        $show = $showRankingRepository->findOneBy(['show_database_table_name' => $databaseTableName]);
+        $showRanking = $showRankingRepository->findOneBy(['show_database_table_name' => $databaseTableName]);
+
+        $show = $this->showsRepository->findOneBy(['database_table_name' => $databaseTableName]);
+
+        if (!$show) {
+            return new JsonResponse(false);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if (!is_object($show))
+        if (!is_object($showRanking))
         {
             $showRanking = new ShowRanking();
-            $showRanking->setShowName($showName);
+            $showRanking->setShowName($show->getName());
             $showRanking->setShowDatabaseTableName($databaseTableName);
             $showRanking->setVotesUp(1);
             $showRanking->setVotesDown(0);
 
             $entityManager->persist($showRanking);
         } else {
-            $score = $show->getVotesUp();
-            $show->setVotesUp($score + 1);
+            $score = $showRanking->getVotesUp();
+            $showRanking->setVotesUp($score + 1);
 
-            $entityManager->persist($show);
+            $entityManager->persist($showRanking);
         }
 
         $entityManager->flush();
@@ -101,26 +111,31 @@ class ShowsRankingController extends AbstractController
         $showRankingRepository = $this->getDoctrine()->getRepository(ShowRanking::class);
            
         $databaseTableName = $request->request->get('database_table_name');
-        $showName = $request->request->get('show_name');
      
-        $show = $showRankingRepository->findOneBy(['show_database_table_name' => $databaseTableName]);
+        $showRanking = $showRankingRepository->findOneBy(['show_database_table_name' => $databaseTableName]);
+
+        $show = $this->showsRepository->findOneBy(['database_table_name' => $databaseTableName]);
+
+        if (!$show) {
+            return new JsonResponse(false);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if (!is_object($show)) 
+        if (!is_object($showRanking)) 
         {  
             $showRanking = new ShowRanking();
-            $showRanking->setShowName($showName);
+            $showRanking->setShowName($show->getName());
             $showRanking->setShowDatabaseTableName($databaseTableName);
             $showRanking->setVotesUp(0);
             $showRanking->setVotesDown(1);
 
             $entityManager->persist($showRanking);
         } else {
-            $score = $show->getVotesDown();
-            $show->setVotesDown($score + 1);
+            $score = $showRanking->getVotesDown();
+            $showRanking->setVotesDown($score + 1);
 
-            $entityManager->persist($show);
+            $entityManager->persist($showRanking);
         }
 
         $entityManager->flush();
