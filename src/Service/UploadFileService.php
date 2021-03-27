@@ -50,7 +50,7 @@ class UploadFileService
         return file_exists($path . "/" .$newFilename);
     }
 
-    private function getNewFileName(object $file): string
+    public function getNewFileName(object $file): string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 

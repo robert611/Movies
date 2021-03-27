@@ -60,7 +60,7 @@ class DashboardController extends AbstractDashboardController
             $show = new Shows();
             $show->setName($formData['name']);
             $show->setDatabaseTableName($formData['original_name']);
-            $show->setPicture($form->get('picture')->getData()->getClientOriginalName());
+            $show->setPicture($uploadFileService->getNewFileName($formData['picture']));
             $show->setDescription($formData['description']);
             $show->setUser($this->getUser());
             $show->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
