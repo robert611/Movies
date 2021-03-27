@@ -147,7 +147,7 @@ class DashboardController extends AbstractDashboardController
 
             $this->addFlash('admin_success', 'Episode has been successfuly added');
 
-            return $this->redirectToRoute('admin_show_episode_create', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
+            return $this->redirectToRoute('admin_show_episode_create', ['showDatabaseTableName' => $showDatabaseTableName]);
         }
         
         return $this->render('admin/show/create_episode.html.twig', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
