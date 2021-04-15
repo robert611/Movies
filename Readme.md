@@ -1,5 +1,6 @@
 ## Movies
-Create a website which allows to easily find a show and it's particular episodes, and get links to websites where user can watch them
+Create a website which allows to easily find a show and it's particular episodes, and get links to websites where user can watch them.
+Click http://movies.robert611.beep.pl/ to see the website.
 
 ## Project Specifications
 - Show Latest added episodes
