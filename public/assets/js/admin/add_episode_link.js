@@ -4,7 +4,13 @@ const addLinkInputRow = (e) => {
     e.preventDefault();
 
     let linkInputRows = document.querySelectorAll('#link-input-rows-container .row');
-    inputRowNumber = parseInt(linkInputRows[linkInputRows.length - 1].getAttribute('data-number')) + 1;
+
+    if (linkInputRows[linkInputRows.length - 1] == undefined) {
+        inputRowNumber = 1;
+    }
+    else {
+        inputRowNumber = parseInt(linkInputRows[linkInputRows.length - 1].getAttribute('data-number')) + 1;
+    }
 
     let linkInputRowsContainer = document.getElementById('link-input-rows-container');
 
@@ -12,13 +18,18 @@ const addLinkInputRow = (e) => {
 
     if (linkInputRowsContainer  == undefined) throw new Error('Container(div) for link input rows is undefined, so there is no place to put another link form.');
 
-    if (lastAddedLinkInputRow == undefined) throw new Error('Last link inputs row is undefined, so there is no row after which another can be added. It can be result of incorret work of delete link form script.');
-
     let formRow = createFormRow(inputRowNumber);
 
-    lastAddedLinkInputRow.removeAttribute('id');
+    if (lastAddedLinkInputRow !== undefined && lastAddedLinkInputRow !== null)
+    {
+        lastAddedLinkInputRow.removeAttribute('id');
 
-    linkInputRowsContainer.insertBefore(formRow, lastAddedLinkInputRow.nextSibling);
+        linkInputRowsContainer.insertBefore(formRow, lastAddedLinkInputRow.nextSibling);
+    }
+    else 
+    {
+        linkInputRowsContainer.appendChild(formRow);
+    }
 
     updateLinkInputRowDeleteButtons();
 }
