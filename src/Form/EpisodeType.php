@@ -32,9 +32,7 @@ class EpisodeType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'constraints' => [
-                    new NotBlank()
-                ]
+                'required' => false
             ])
         ;
     }
