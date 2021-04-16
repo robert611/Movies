@@ -14,21 +14,37 @@ function chooseShowsToCompare()
 
     fetch('/api/ranking/find/shows/to/compare')
         .then((response) => {
+            if (response.ok !== true)
+            {
+                hideRankingContainerChildren(); 
+
+                showsContainer.appendChild(createErrorMessage());
+                return { then: function() {} }; /* end the chain */
+            }
+            return response;
+        })
+        .then((response) => {
             return response.json();
         })
         .then((shows) => {
-
-            hideRankingContainerChildren();    
-
-            shows.map((show) => {
-                showsContainer.appendChild(createShowToCompareWidget(show));
-            });
-        
-            let showsToComparePictures = document.getElementsByClassName('show-to-compare-picture');
-
-            Array.from(showsToComparePictures).forEach((picture) => {
-                picture.addEventListener('click', vote);
-            });
+            hideRankingContainerChildren(); 
+            
+            if (shows.length == 0)
+            {
+                showsContainer.appendChild(createErrorMessage());
+            }
+            else
+            {
+                shows.map((show) => {
+                    showsContainer.appendChild(createShowToCompareWidget(show));
+                });
+            
+                let showsToComparePictures = document.getElementsByClassName('show-to-compare-picture');
+    
+                Array.from(showsToComparePictures).forEach((picture) => {
+                    picture.addEventListener('click', vote);
+                });
+            }
         }); 
 }
 
@@ -127,6 +143,18 @@ function createRankingSpinnerWidget()
     center.appendChild(spinner);
 
     return center;
+}
+
+function createErrorMessage()
+{
+    let paragraph = document.createElement('paragraph');
+    paragraph.classList.add('error-msg');
+    paragraph.classList.add('mt-3');
+    paragraph.classList.add('fs-4');
+
+    paragraph.textContent = "Wystąpił jakiś problem, prosimy spróbować później.";
+
+    return paragraph;
 }
 
 function hideRankingContainerChildren() {
