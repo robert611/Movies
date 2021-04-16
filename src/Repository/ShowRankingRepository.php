@@ -19,22 +19,21 @@ class ShowRankingRepository extends ServiceEntityRepository
         parent::__construct($registry, ShowRanking::class);
     }
 
-    // /**
-    //  * @return ShowRanking[] Returns an array of ShowRanking objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getTopShows(int $showsLimit): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM show_ranking order by votes_up - votes_down DESC LIMIT ${showsLimit}";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return null;
+        }
+
+        return $stmt->fetchAll();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?ShowRanking

@@ -32,7 +32,7 @@
                                 {% if showsRanking is iterable and showsRanking|length is not same as(0) %}
                                     {% for show in showsRanking %}
                                         <a class="nav-link side-menu card-custom-link"
-                                        href="{{ path('show_index', {'showTableName' : show.getShowDatabaseTableName()}) }}" role="tab" aria-controls="v-pills-{{ show.getShowName() }}" aria-selected="true">{{ show.getShowName() }}</a>
+                                        href="{{ path('show_index', {'showTableName' : show.show_database_table_name}) }}">{{ show.show_name }}</a>
                                     {% endfor %}
                                 {% else %}
                                     <h4 class="mt-3 text-center">Ranking jest chwilowo niedostępny</h4>

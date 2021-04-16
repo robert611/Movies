@@ -22,7 +22,7 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         $showsRanking = $this->getDoctrine()
-            ->getRepository(ShowRanking::class)->findBy([], [], 15);
+            ->getRepository(ShowRanking::class)->getTopShows(15);
         
         $showsLatestEpisodes = $this->getDoctrine()
             ->getRepository(LatestEpisodes::class)->getLatestEpisodesWithFilledData(9);
