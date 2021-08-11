@@ -23,6 +23,7 @@ use App\Entity\Visitor;
 use App\Entity\PageVisitors;
 use App\Entity\ShowCategory;
 use App\Entity\Studio;
+use App\Entity\ShowTheme;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -266,5 +267,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Page Visitors', 'fas fa-address-book', PageVisitors::class);
         yield MenuItem::linkToCrud('Show Categories', 'fas fa-bars', ShowCategory::class);
         yield MenuItem::linkToCrud('Studios', 'fas fa-atlas', Studio::class);
+        yield MenuItem::linkToCrud('Show Themes', 'fas fa-vest', ShowTheme::class);
     }
 }

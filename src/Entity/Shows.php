@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShowsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +64,16 @@ class Shows
      * @ORM\ManyToOne(targetEntity=Studio::class, inversedBy="shows")
      */
     private $studio;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=ShowTheme::class, inversedBy="shows")
+     */
+    private $themes;
+
+    public function __construct()
+    {
+        $this->themes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -172,6 +184,30 @@ class Shows
     public function setStudio(?Studio $studio): self
     {
         $this->studio = $studio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ShowTheme[]
+     */
+    public function getThemes(): Collection
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(ShowTheme $theme): self
+    {
+        if (!$this->themes->contains($theme)) {
+            $this->themes[] = $theme;
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(ShowTheme $theme): self
+    {
+        $this->themes->removeElement($theme);
 
         return $this;
     }
