@@ -21,6 +21,8 @@ use App\Entity\ShowRanking;
 use App\Entity\User;
 use App\Entity\Visitor;
 use App\Entity\PageVisitors;
+use App\Entity\ShowCategory;
+use App\Entity\Studio;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -262,5 +264,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Shows Links', 'fa fa-link', ShowLinks::class);
         yield MenuItem::linkToCrud('Visitors', 'fas fa-user-plus', Visitor::class);
         yield MenuItem::linkToCrud('Page Visitors', 'fas fa-address-book', PageVisitors::class);
+        yield MenuItem::linkToCrud('Show Categories', 'fas fa-bars', ShowCategory::class);
+        yield MenuItem::linkToCrud('Studios', 'fas fa-atlas', Studio::class);
     }
 }

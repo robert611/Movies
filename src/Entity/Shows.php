@@ -53,6 +53,16 @@ class Shows
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ShowCategory::class, inversedBy="shows")
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Studio::class, inversedBy="shows")
+     */
+    private $studio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +148,30 @@ class Shows
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCategory(): ?ShowCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?ShowCategory $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getStudio(): ?Studio
+    {
+        return $this->studio;
+    }
+
+    public function setStudio(?Studio $studio): self
+    {
+        $this->studio = $studio;
 
         return $this;
     }
