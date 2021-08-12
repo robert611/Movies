@@ -69,6 +69,18 @@
                                     {{ episode.description }}
                                 {% endif %}
                             </p>
+
+                            </p>
+                                <h5><span class="badge bg-secondary">{{ show.category|capitalize }}</span>
+                                <span class="badge bg-warning ">{{ show.studio.slug }}</span>
+
+                                {% for theme in show.themes %}
+                                    <span class="badge bg-primary">{{ theme.name|capitalize }}</span>
+                                {% endfor %}
+
+                                </h5>
+                            </p>
+                          
                         </div>
                     </div>
                 </div>

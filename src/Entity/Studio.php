@@ -56,6 +56,13 @@ class Studio
         return $this;
     }
 
+    public function getSlug(): string
+    {
+        $slug = str_replace("_", " ", $this->getName());
+
+        return ucwords($slug);
+    }
+
     /**
      * @return Collection|Shows[]
      */
