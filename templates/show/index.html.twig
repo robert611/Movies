@@ -64,7 +64,7 @@
                             <h4>{{ show.getName() }} - {{ episode.title }} <span class="text-grey-dark">#Odcinek {{ episode.episode }}</span></h4>
                             <p>
                                 {% if episode.description is null or episode.description is empty %}
-                                    {{ show.getDescription() }}
+                                    {{ show.getDescription()|raw }}
                                 {% else %}
                                     {{ episode.description }}
                                 {% endif %}
