@@ -11,6 +11,11 @@ use App\Service\EpisodeLinkService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class ShowsCrudController extends AbstractCrudController
 {
@@ -88,14 +93,20 @@ class ShowsCrudController extends AbstractCrudController
         return $this->redirectToRoute('admin_show_episodes_list', ['showDatabaseTableName' => $showDatabaseTableName]);
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
+            TextField::new('name'),
+            TextField::new('database_table_name'),
+            TextField::new('picture'),
             TextEditorField::new('description'),
+            AssociationField::new('studio'),
+            AssociationField::new('category'),
+            AssociationField::new('themes'),
+            DateTimeField::new('created_at'),
+            DateTimeField::new('updated_at')
         ];
     }
-    */
+
 }
