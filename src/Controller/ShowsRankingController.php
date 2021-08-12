@@ -52,7 +52,7 @@ class ShowsRankingController extends AbstractController
         }
 
         $defaultContext = [
-            AbstractNormalizer::IGNORED_ATTRIBUTES => ['user', 'description', 'createdAt', 'updatedAt']
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['user', 'description', 'createdAt', 'updatedAt', 'studio', 'category', 'themes']
         ];
 
         $encoders = [new JsonEncoder()];
