@@ -45,21 +45,23 @@
                     {% if showsLatestEpisodes is iterable and showsLatestEpisodes|length is not same as(0) %}
                         <div class="row">
                             {% for episode in showsLatestEpisodes %}
-                                <div class="xol-xs-12 col-sm-6 col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
-                                        <div class="card-body">
-                                            <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeId': episode.id}) }}">
-                                                <h5 class="card-title">
-                                                    {{ episode.show_name }}  {{ episode.title }}
-                                                </h5>
-                                            </a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            {{ episode.created_at }}
+                                {% if episode is iterable %}
+                                    <div class="xol-xs-12 col-sm-6 col-md-4">
+                                        <div class="card mb-2">
+                                            <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
+                                            <div class="card-body">
+                                                <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeId': episode.id}) }}">
+                                                    <h5 class="card-title">
+                                                        {{ episode.show_name }}  {{ episode.title }}
+                                                    </h5>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                {{ episode.created_at }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     {% else %}
