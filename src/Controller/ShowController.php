@@ -8,13 +8,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\ShowService;
 use App\Entity\Shows;
 use App\Entity\ShowLinks;
+use App\Service\FindSimilarShows;
 
 class ShowController extends AbstractController
 {
     /**
      * @Route("/show/{showTableName}/{episodeId}", name="show_index")
      */
-    public function index($showTableName, $episodeId = 1): Response
+    public function index(FindSimilarShows $findSimilarShows, $showTableName, $episodeId = 1): Response
     {
         $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
         
@@ -47,13 +48,16 @@ class ShowController extends AbstractController
         $showSeasonEpisodes = $showService->getSeasonEpisodes($episodeSeason);
 
         $linksToEpisode = $showsLinksRepository->findBy(['show_database_table_name' => $showTableName, 'episode_id' => $episodeId]);
+
+        $similarShows = $findSimilarShows->getSimilarShows($show, 12);
  
         return $this->render('show/index.html.twig', [
             'showSeasonsNumbers' => $showSeasonsNumbersWithSeasonFirstEpisodeId,
             'episode' => $thisEpisode,
             'episodes' => $showSeasonEpisodes,
             'show' => $show,
-            'links' => $linksToEpisode
+            'links' => $linksToEpisode,
+            'similarShows' => $similarShows
         ]);
     }
 }
