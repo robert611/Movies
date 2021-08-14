@@ -105,6 +105,17 @@ section#main-container {
     }
 }
 
+.recently-watched-show-picture {
+    width: 100%;
+    max-height: 210px;
+}
+
+@media screen and (max-width: 575px) {
+    .recently-watched-show-picture {
+        max-height: 100%;
+    }
+}
+
 .card-custom-link {
     border: solid 1px #ecf0f1; 
     margin: 2px;

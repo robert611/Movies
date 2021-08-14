@@ -9,13 +9,14 @@ use App\Service\ShowService;
 use App\Entity\Shows;
 use App\Entity\ShowLinks;
 use App\Service\FindSimilarShows;
+use App\Service\UserWatchingHistoryService;
 
 class ShowController extends AbstractController
 {
     /**
      * @Route("/show/{showTableName}/{episodeId}", name="show_index")
      */
-    public function index(FindSimilarShows $findSimilarShows, $showTableName, $episodeId = 1): Response
+    public function index(FindSimilarShows $findSimilarShows, UserWatchingHistoryService $userWatchingHistory, $showTableName, $episodeId = 1): Response
     {
         $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
         
@@ -43,13 +44,13 @@ class ShowController extends AbstractController
 
         $showSeasonsNumbersWithSeasonFirstEpisodeId = $showService->getShowSeasonsNumbersWithSeasonFirstEpisodeId();
 
-        $episodeSeason = $thisEpisode['season'];
-
-        $showSeasonEpisodes = $showService->getSeasonEpisodes($episodeSeason);
+        $showSeasonEpisodes = $showService->getSeasonEpisodes($thisEpisode['season']);
 
         $linksToEpisode = $showsLinksRepository->findBy(['show_database_table_name' => $showTableName, 'episode_id' => $episodeId]);
 
         $similarShows = $findSimilarShows->getSimilarShows($show, 12);
+        
+        $userWatchingHistory->saveVisitToUserWatchingHistory($show, $episodeId, $this->getUser());
  
         return $this->render('show/index.html.twig', [
             'showSeasonsNumbers' => $showSeasonsNumbersWithSeasonFirstEpisodeId,

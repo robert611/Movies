@@ -10,13 +10,35 @@
 {% block body %}
     {{ include('index/_header.html.twig') }}
 
-    <hr class="light-hr mt-20 mb-7">
+    <hr class="light-hr mt-20 mb-3">
 
-    <main class="mt-20">
+    <main>
         <div class="container-fluid mt-5 px-4 pe-4">
-        
-            <div class="row">
+            {% if userWatchingHistory is iterable and userWatchingHistory|length is not same as(0) %}
+                <section class="recently-watched-shows">
 
+                    <h4 class="mb-4">#Ostatnio oglądane</h4>
+
+                    <div class="row mb-5">
+                        {% for visit in userWatchingHistory %}
+                            <div class="xol-xs-12 col-sm-6 col-md-3">
+                                <div class="card mb-3">
+                                    <img class="recently-watched-show-picture" src="{{ asset('assets/pictures/shows/'~visit.series.picture) }}" alt="{{ visit.series.name }} show picture">
+                                    <div class="card-body">
+                                        <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : visit.series.databaseTableName, 'episodeId': visit.episodeId }) }}">
+                                            <h5 class="card-title">
+                                                {{ visit.series.name }}
+                                            </h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div> 
+                </section>
+            {% endif %}
+
+            <div class="row">
                 <div class="col-xs-12 col-md-4">
                     <div class="card text-center">
                         <div class="card-body">

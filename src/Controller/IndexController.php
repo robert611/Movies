@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use App\Entity\LatestEpisodes;
 use App\Entity\ShowRanking;
 use App\Entity\Shows;
+use App\Entity\UserWatchingHistory;
 
 class IndexController extends AbstractController
 {
@@ -27,9 +28,13 @@ class IndexController extends AbstractController
         $showsLatestEpisodes = $this->getDoctrine()
             ->getRepository(LatestEpisodes::class)->getLatestEpisodesWithFilledData(9);
 
+        $userWatchingHistory = $this->getDoctrine()
+            ->getRepository(UserWatchingHistory::class)->findBy(['user' => $this->getUser()], ['date' => 'DESC'], 4);
+
         return $this->render('index/index.html.twig', [
             'showsRanking' => $showsRanking,
-            'showsLatestEpisodes' => $showsLatestEpisodes
+            'showsLatestEpisodes' => $showsLatestEpisodes,
+            'userWatchingHistory' => $userWatchingHistory
         ]);
     }
 
