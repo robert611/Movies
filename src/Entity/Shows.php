@@ -70,9 +70,15 @@ class Shows
      */
     private $themes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserWatchingHistory::class, mappedBy="series", orphanRemoval=true)
+     */
+    private $userWatchingHistories;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
+        $this->userWatchingHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,6 +214,36 @@ class Shows
     public function removeTheme(ShowTheme $theme): self
     {
         $this->themes->removeElement($theme);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserWatchingHistory[]
+     */
+    public function getUserWatchingHistories(): Collection
+    {
+        return $this->userWatchingHistories;
+    }
+
+    public function addUserWatchingHistory(UserWatchingHistory $userWatchingHistory): self
+    {
+        if (!$this->userWatchingHistories->contains($userWatchingHistory)) {
+            $this->userWatchingHistories[] = $userWatchingHistory;
+            $userWatchingHistory->setSeries($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWatchingHistory(UserWatchingHistory $userWatchingHistory): self
+    {
+        if ($this->userWatchingHistories->removeElement($userWatchingHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($userWatchingHistory->getSeries() === $this) {
+                $userWatchingHistory->setSeries(null);
+            }
+        }
 
         return $this;
     }

@@ -46,9 +46,15 @@ class User implements UserInterface
      */
     private $shows;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserWatchingHistory::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userWatchingHistories;
+
     public function __construct()
     {
         $this->shows = new ArrayCollection();
+        $this->userWatchingHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +151,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($show->getUser() === $this) {
                 $show->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserWatchingHistory[]
+     */
+    public function getUserWatchingHistories(): Collection
+    {
+        return $this->userWatchingHistories;
+    }
+
+    public function addUserWatchingHistory(UserWatchingHistory $userWatchingHistory): self
+    {
+        if (!$this->userWatchingHistories->contains($userWatchingHistory)) {
+            $this->userWatchingHistories[] = $userWatchingHistory;
+            $userWatchingHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWatchingHistory(UserWatchingHistory $userWatchingHistory): self
+    {
+        if ($this->userWatchingHistories->removeElement($userWatchingHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($userWatchingHistory->getUser() === $this) {
+                $userWatchingHistory->setUser(null);
             }
         }
 
