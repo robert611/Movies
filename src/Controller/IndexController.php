@@ -10,6 +10,9 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use App\Entity\LatestEpisodes;
 use App\Entity\ShowRanking;
 use App\Entity\Shows;
@@ -85,5 +88,23 @@ class IndexController extends AbstractController
         }
 
         return new JsonResponse($episodes);
+    }
+
+    /**
+     * @Route("/api/user/watching/history/fetch", name="api_user_watching_history_fetch")
+     */
+    public function fetchUserWatchingHistory()
+    {
+        $userWatchingHistory = $this->getDoctrine()
+            ->getRepository(UserWatchingHistory::class)->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
+
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer($classMetadataFactory)];
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        return new Response($serializer->serialize($userWatchingHistory, 'json', ['groups' => 'user_watching_history']));
     }
 }

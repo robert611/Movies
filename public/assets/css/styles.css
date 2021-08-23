@@ -52,6 +52,11 @@ section#main-container {
     height: 3rem;
 }
 
+.watching-history-spinner-border {
+    width: 2rem!important;
+    height: 2rem!important;
+}
+
 .hide {
     display: none;
 }
@@ -169,4 +174,16 @@ section#main-container {
     height: 60px;
     line-height: 60px;
     background-color: #f5f5f5;
+}
+
+.display-inline {
+    display: inline;
+}
+
+.float-right {
+    float:right;
+}
+
+.disabled-color {
+    color: grey;
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserWatchingHistoryRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,12 +26,14 @@ class UserWatchingHistory
 
     /**
      * @ORM\ManyToOne(targetEntity=Shows::class, inversedBy="userWatchingHistories")
+     * @Groups({"user_watching_history"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $series;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"user_watching_history"})
      */
     private $episode_id;
 

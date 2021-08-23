@@ -5,6 +5,7 @@
     <script src="{{ asset('assets/js/shows_ranking.js') }}"></script>
     <script src="{{ asset('assets/js/find_episode.js') }}"></script>
     <script src="{{ asset('assets/js/find_show.js') }}"></script>
+    <script src="{{ asset('assets/js/recent_watched_shows.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -13,15 +14,28 @@
     <hr class="light-hr mt-20 mb-3">
 
     <main>
-        <div class="container-fluid mt-5 px-4 pe-4">
+        <div class="container-fluid mt-5 mb-5 px-4 pe-4">
             {% if userWatchingHistory is iterable and userWatchingHistory|length is not same as(0) %}
-                <section class="recently-watched-shows">
+                <section id="recently-watched-shows">
 
-                    <h4 class="mb-4">#Ostatnio oglądane</h4>
+                    <div class="mb-4">
+                        <h4 class="mb-4 display-inline">#Ostatnio oglądane</h4>
+                        <h2 class="display-inline float-right">
+                            <div id="watching-history-spinner">
+                                <div class="spinner-border watching-history-spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="hide" id="watching-history-arrows">
+                                <i class="fas fa-arrow-left disabled-color" id="previous-recently-watched-show"></i>
+                                <i class="fas fa-arrow-right" id="next-recently-watched-show"></i>
+                            </div>
+                        </h2>
+                    </div>
 
-                    <div class="row mb-5">
-                        {% for visit in userWatchingHistory %}
-                            <div class="xol-xs-12 col-sm-6 col-md-3">
+                    <div class="row mb-5" id="user-watching-history-container">
+                        {% for i, visit in userWatchingHistory %}
+                            <div class="col-xs-12 col-sm-6 col-md-3 recently-watched-show-card" data-descendingId={{ i }}>
                                 <div class="card mb-3">
                                     <img class="recently-watched-show-picture" src="{{ asset('assets/pictures/shows/'~visit.series.picture) }}" alt="{{ visit.series.name }} show picture">
                                     <div class="card-body">
@@ -34,7 +48,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    </div> 
                 </section>
             {% endif %}
 

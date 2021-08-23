@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ShowsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,16 +22,19 @@ class Shows
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_watching_history"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_watching_history"})
      */
     private $database_table_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_watching_history"})
      */
     private $picture;
 
