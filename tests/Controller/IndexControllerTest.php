@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\ShowsRepository;
+use App\Repository\UserRepository;
 
 class IndexControllerTest extends WebTestCase
 {
@@ -58,5 +59,61 @@ class IndexControllerTest extends WebTestCase
         $this->assertTrue(isset($episodes[0]->name));
 
         $this->assertEquals(200, $this->client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testIfLoggedUserWillSeeHisWatchingHistory()
+    {
+        $this->client->loginUser(static::$container->get(UserRepository::class)->findOneBy(['email' => 'user_watching_history@gmail.com']));
+
+        $this->client->request('GET', '/');
+
+        $this->assertSelectorTextContains('html', '#Ostatnio oglądane');
+    }
+
+    public function testIfUnloggedUserWillNotSeeHisWatchingHistory()
+    {
+        $this->client->request('GET', '/');
+
+        $this->assertSelectorTextNotContains('html', '#Ostatnio oglądane');
+    }
+
+    public function testIfUserWithoutWatchingHistoryWillNotSeeItsContainer()
+    {
+        $this->client->loginUser(static::$container->get(UserRepository::class)->findOneBy(['email' => 'no_watching_history@gmail.com']));
+
+        $this->client->request('GET', '/');
+
+        $this->assertSelectorTextNotContains('html', '#Ostatnio oglądane');
+    }
+
+    public function testIfUserWatchingHistoryCanBeFetched()
+    {
+        $this->client->loginUser(static::$container->get(UserRepository::class)->findOneBy(['email' => 'user_watching_history@gmail.com']));
+
+        $crawler = $this->client->request('GET', 'api/user/watching/history/fetch');
+
+        $response = $this->client->getResponse();
+
+        $visits = json_decode($response->getContent());
+
+        $this->assertEquals(count($visits), 2);
+        $this->assertEquals($visits[0]->series->database_table_name, 'mr_robot');
+        $this->assertEquals($visits[0]->episode_id, 1);
+        $this->assertEquals($visits[1]->series->database_table_name, 'the_penguins_of_madagascar');
+        $this->assertEquals($visits[1]->episode_id, 1);
+    }
+
+    public function testIfWatchingHistoryWillReturnEmptyArrayForUnloggedUser()
+    {
+        $crawler = $this->client->request('GET', 'api/user/watching/history/fetch');
+
+        $response = $this->client->getResponse();
+
+        $visits = json_decode($response->getContent());
+
+        $this->assertEquals(count($visits), 0);
     }
 }
