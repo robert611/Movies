@@ -23,8 +23,8 @@ class AdminControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = static::createClient();
-        $this->testCasualUser = static::$container->get(UserRepository::class)->findOneBy(['email' => 'casual_user@interia.pl']);
-        $this->testAdminUser = static::$container->get(UserRepository::class)->findOneBy(['email' => 'admin@interia.pl']);
+        $this->testCasualUser = static::$container->get(UserRepository::class)->findOneBy(['email' => 'casual_user@gmail.com']);
+        $this->testAdminUser = static::$container->get(UserRepository::class)->findOneBy(['email' => 'admin_user@gmail.com']);
         $this->showRepository = static::$container->get(ShowsRepository::class);
         $this->latestEpisodesRepository = static::$container->get(LatestEpisodesRepository::class);
     }
