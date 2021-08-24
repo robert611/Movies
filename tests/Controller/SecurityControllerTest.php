@@ -32,7 +32,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/');
 
-        $form['username'] = 'test_user';
+        $form['username'] = 'casual_user';
         $form['password'] = 'test_user';
 
         $crawler = $this->client->submitForm('Login', $form);
@@ -52,7 +52,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/');
 
-        $form['username'] = 'test_user';
+        $form['username'] = 'casual_user';
         $form['password'] = 'test_user';
 
         $this->client->submitForm('Login', $form);
