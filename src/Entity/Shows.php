@@ -85,6 +85,13 @@ class Shows
         $this->userWatchingHistories = new ArrayCollection();
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -250,5 +257,17 @@ class Shows
         }
 
         return $this;
+    }
+
+    public function isInThemes(ShowTheme $searchedTheme): bool
+    {
+        $themes = $this->getThemes();
+
+        foreach ($themes as $theme)
+        {
+            if ($theme->getId() == $searchedTheme->getId()) return true;
+        }
+        
+        return false;
     }
 }
