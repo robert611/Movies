@@ -22,6 +22,8 @@ class FindSimilarShows
     {
         $shows = $this->showRepository->findAll();
 
+        shuffle($shows);
+
         $showsWithAssignedPoints = $this->evaluateShowsSimilarity($showToCompare, $shows);
 
         $showsSortedBySimilarityPoints = $this->sortShowsBySimilarityPoints($showsWithAssignedPoints);
