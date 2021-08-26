@@ -5,14 +5,22 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\ShowLinksRepository;
 use App\Repository\ShowsRepository;
+use App\Service\FindSimilarShows;
 
 class ShowControllerTest extends WebTestCase
 {
     public $client = null;
+    private $showsRepository;
+    private $show;
+    private $findSimilarShows;
+
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $this->showsRepository = static::$container->get(ShowsRepository::class);
+        $this->show = $this->showsRepository->findOneBy([]);
+        $this->findSimilarShows = new FindSimilarShows($this->showsRepository);
     }
 
     /**
@@ -20,7 +28,7 @@ class ShowControllerTest extends WebTestCase
      */
     public function testIfShowPageIsSuccessfull()
     {
-        $this->client->request('GET', '/show/victorious/1');
+        $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName() .'/1');
 
         $this->assertEquals(200, $this->client->getResponse()->isSuccessful());
     }
@@ -50,9 +58,9 @@ class ShowControllerTest extends WebTestCase
      */
     public function testIfEpisodePropertiesAreDisplayed()
     {
-        $this->client->request('GET', '/show/victorious/1');
+        $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName() . '/1');
 
-        $episode = static::$container->get(ShowsRepository::class)->findEpisode('victorious', 1);
+        $episode = $this->showsRepository->findEpisode('victorious', 1);
 
         $this->assertSelectorTextContains('html', $episode['description']);
         $this->assertSelectorTextContains('html', $episode['title']);
@@ -64,7 +72,7 @@ class ShowControllerTest extends WebTestCase
      */
     public function testIfUserCantSeeNotExistingEpisode()
     {
-        $this->client->request('GET', '/show/victorious/11111');
+        $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName() . '/11111');
 
         $this->assertResponseRedirects("/");
 
@@ -85,5 +93,18 @@ class ShowControllerTest extends WebTestCase
         $this->client->request('GET', '/');
 
         $this->assertSelectorTextContains('html', 'Nie ma takiego serialu');
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testIfUserCanSeeSimilarShows()
+    {
+        $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName());
+
+        $similarShows = $this->findSimilarShows->getSimilarShows($this->show, 1);
+
+        $this->assertSelectorTextContains('html', '#Podobne Filmy i Seriale');
+        $this->assertSelectorTextContains('html', $similarShows[0]['show']->getName());
     }
 }
