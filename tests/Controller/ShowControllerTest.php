@@ -107,4 +107,16 @@ class ShowControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html', '#Podobne Filmy i Seriale');
         $this->assertSelectorTextContains('html', $similarShows[0]['show']->getName());
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testIfShowStudioIsDisplayed()
+    {
+        $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName());
+
+        $studioName = $this->show->getStudio()->getSlug();
+
+        $this->assertSelectorTextContains('html', $studioName);
+    }
 }
