@@ -102,7 +102,7 @@
                             <div class="card mb-3">
                                 <img class="similar-show-picture" src="{{ asset('assets/pictures/shows/'~element.show.picture) }}" alt="{{ show.name }} show picture">
                                 <div class="card-body">
-                                    <a class="text-decoration-none" href="">
+                                    <a class="text-decoration-none" href="{{ path('show_index', {'showTableName': element.show.databaseTableName}) }}">
                                         <h5 class="card-title">
                                             {{ element.show.name }}
                                         </h5>
