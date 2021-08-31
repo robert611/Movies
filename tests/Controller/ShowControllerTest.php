@@ -111,7 +111,7 @@ class ShowControllerTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testIfShowStudioIsDisplayed()
+    public function testIfShowStudioNameIsDisplayed()
     {
         $this->client->request('GET', '/show/' . $this->show->getDatabaseTableName());
 
