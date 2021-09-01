@@ -19,32 +19,28 @@ class ShowThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, ShowTheme::class);
     }
 
-    // /**
-    //  * @return ShowTheme[] Returns an array of ShowTheme objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findThemesContainingShows(): array | bool
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?ShowTheme
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "SELECT DISTINCT show_theme_id FROM shows_show_theme";
+
+        try {
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        $themesIds = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->where('t.id IN (:themesIds)')
+            ->setParameter('themesIds', $themesIds);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->execute();
     }
-    */
 }

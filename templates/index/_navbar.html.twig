@@ -5,27 +5,31 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-3">
-        
-        </ul>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <ul class="navbar-nav my-2 my-lg-0">
+        <ul class="navbar-nav me-auto mb-3"></ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ path('meta_data_show_search') }}">Search</a>
+            </li>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('admin') }}">Panel administratora</a>
                     </li>
                 {% endif %}
-            <li class="nav-item"><a class="nav-link"  href="">Hello: {{ app.user.username }}</a></li>
-            <li class="nav-item"><a class="nav-link"  href="{{ path('app_logout') }}">Logout</a></li>
-            </ul>
-        {% else %}
+                <li class="nav-item"><a class="nav-link" href="#">Hello: {{ app.user.username }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
 
-        <form class="d-flex align-items-center" method="post" action="{{ path('app_login') }}">
-            <input class="form-control me-2" type="text" aria-label="Name" id="display_name" name="username" value="{% if last_username is defined and last_username is not null %}{{ last_username }}{% endif %}" placeholder="Login">
-            <input class="form-control me-2" type="password" placeholder="Password" id="password" aria-label="Password" name="password">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-        </form>
+        {% if not is_granted('ROLE_USER') %}
+            <form class="d-flex align-items-center mx-2" method="post" action="{{ path('app_login') }}">
+                <input class="form-control me-2" type="text" aria-label="Name" id="display_name" name="username" value="{% if last_username is defined and last_username is not null %}{{ last_username }}{% endif %}" placeholder="Login">
+                <input class="form-control me-2" type="password" placeholder="Password" id="password" aria-label="Password" name="password">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+            </form>
         {% endif %}
     </div>
 </nav>

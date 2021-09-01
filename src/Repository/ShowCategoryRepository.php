@@ -19,32 +19,20 @@ class ShowCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, ShowCategory::class);
     }
 
-    // /**
-    //  * @return ShowCategory[] Returns an array of ShowCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findCategoriesContainingShows(): array | bool
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?ShowCategory
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "SELECT c.id, c.name FROM show_category c where id IN(SELECT DISTINCT category_id FROM shows)";
+
+        try {
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute();
+        } catch (DBALException $e) {
+            return $e->getMessage();
+        }
+
+        return $stmt->fetchAll();
     }
-    */
 }

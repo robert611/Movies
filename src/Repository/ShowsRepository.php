@@ -182,4 +182,42 @@ class ShowsRepository extends ServiceEntityRepository
 
         return true;
     }
+
+    public function findShowsByCategory(int $categoryId): array | bool
+    {
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where('s.category = :categoryId')
+            ->setParameter('categoryId', $categoryId);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->execute();
+    }
+
+    public function findShowsByStudio(int $studioId): array | bool
+    {
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where('s.studio = :studioId')
+            ->setParameter('studioId', $studioId);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->execute();
+    }
+
+    public function findShowsByTheme(null | \App\Entity\ShowTheme $theme): array
+    {
+        $shows = $this->findAll();
+        $filteredShows = [];
+
+        foreach ($shows as $show)
+        {
+            if ($show->getThemes()->contains($theme))
+            {
+                $filteredShows[] = $show;
+            }
+        }
+
+        return $filteredShows;
+    }
 }
