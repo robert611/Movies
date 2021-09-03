@@ -13,12 +13,15 @@
             </li>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ path('account') }}">Moje Konto</a>
+                </li>
+
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('admin') }}">Panel administratora</a>
                     </li>
                 {% endif %}
-                <li class="nav-item"><a class="nav-link" href="#">Hello: {{ app.user.username }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
             {% endif %}
         </ul>
