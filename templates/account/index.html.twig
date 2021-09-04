@@ -5,6 +5,32 @@
         <div class="col-12 col-md-12 ps-md-4 mb-5">
             <h4 class="mb-4">Nazwa Użytkownika: {{ app.user.username }}</h4>
 
+            <h4 class="mb-4">Twój Email: {{ app.user.email }}</h4>
+
+            <div class="card card-body mb-4">
+                {{ form_start(changeEmailForm) }}
+                    <div class="mb-3">
+                        {{ form_label(changeEmailForm.password, 'Hasło') }}
+                        {{ form_widget(changeEmailForm.password, {'attr': {'class': 'form-control mt-2 mb-2'}}) }}
+                        
+                        <div class="error-msg">
+                            {{ form_errors(changeEmailForm.password) }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form_label(changeEmailForm.newEmail, 'Nowy Email') }}
+                        {{ form_widget(changeEmailForm.newEmail, {'attr': {'class': 'form-control mt-2 mb-2'}}) }}
+
+                        <div class="error-msg">
+                            {{ form_errors(changeEmailForm.newEmail) }}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark">Zmień Email</button>
+                {{ form_end(changeEmailForm) }}
+            </div>
+
             <h4 class="mb-4">Twoje Hasło: ************</h4>
 
             <div class="card card-body">
