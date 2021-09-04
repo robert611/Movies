@@ -43,7 +43,7 @@ class RegistrationControllerTest extends WebTestCase
 
         $this->client->request('GET', '/');
         $this->assertSelectorTextNotContains('html', 'Exception');
-        $this->assertSelectorTextContains('html', 'Hello: test_registration_user');
+        $this->assertSelectorTextContains('html', 'Moje Konto');
 
         $users = static::$container->get('doctrine')->getRepository(User::class)->findAll();
         $user = $users[count($users) - 1];
