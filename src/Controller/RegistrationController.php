@@ -32,24 +32,6 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $repository = $this->getDoctrine()->getRepository(User::class);
-            
-            if ($repository->findOneBy(['username' => $form->get('username')->getData()])) {
-                $session->getFlashBag()->add('error', 'Podany login jest już zajęty');
-
-                return $this->render('registration/register.html.twig', [
-                    'registrationForm' => $form->createView(),
-                ]);
-            }
-
-            if ($repository->findOneBy(['email' => $form->get('email')->getData()])) {
-                $session->getFlashBag()->add('error', 'Podany email jest już zajęty');
-
-                return $this->render('registration/register.html.twig', [
-                    'registrationForm' => $form->createView(),
-                ]);
-            }
-
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

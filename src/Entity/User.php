@@ -7,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity("username", message="Nazwa użytkownika jest już zajęta")
+ * @UniqueEntity("email", message="Adres Email jest już zajęty")
  */
 class User implements UserInterface
 {
@@ -22,12 +26,20 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", unique=true, length=180)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *  min = 8,
+     *  max = 64,
+     *  minMessage = "Nazwa użytkownika musi składać się z conajmniej {{ limit }} znaków",
+     *  maxMessage = "Nazwa użytkownika nie może składać się z więcej niż {{ limit }} znaków",
+     * )
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", unique=true, length=180)
+     * @Assert\Email()
      */
     private $email;
 

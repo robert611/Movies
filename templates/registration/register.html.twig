@@ -9,9 +9,31 @@
                 <h1 class="mb-4">Register</h1>
 
                 {{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm.username, {'attr': {'class': 'form-control mb-2'}}) }}
-                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control mb-2'}}) }}
-                    {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-2'}}) }}
+                    <div class="mb-2">
+                        {{ form_label(registrationForm.username) }}
+                        {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+                        
+                        <div class="error-msg mt-2">
+                            {{ form_errors(registrationForm.username) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        {{ form_label(registrationForm.email) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                        <div class="error-msg mt-2">
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        {{ form_label(registrationForm.plainPassword) }}
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+
+                        <div class="error-msg mt-2">
+                            {{ form_errors(registrationForm.plainPassword) }}
+                        </div>
+                    </div>
 
                     <button class="btn btn-outline-success mt-3">{{ button_label|default('Register') }}</button>
                 {{ form_end(registrationForm) }}
