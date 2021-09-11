@@ -50,6 +50,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=2048)
+     * @Assert\Length(
+     *  min = 8,
+     *  max = 64,
+     *  minMessage = "Nowe hasło musi składać się z conajmniej {{ limit }} znaków",
+     *  maxMessage = "Nowe hasło nie może składać się z więcej niż {{ limit }} znaków",
+     * )
      */
     private $password;
 

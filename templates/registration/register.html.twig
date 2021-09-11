@@ -6,12 +6,12 @@
         <div class="row justify-content-md-center p-2">
             <div class="card col-md-10">
                 <div class="card-body">
-                <h1 class="mb-4">Register</h1>
+                <h1 class="mb-4">Rejestracja</h1>
 
                 {{ form_start(registrationForm) }}
                     <div class="mb-2">
                         {{ form_label(registrationForm.username) }}
-                        {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mt-2 '}}) }}
                         
                         <div class="error-msg mt-2">
                             {{ form_errors(registrationForm.username) }}
@@ -20,22 +20,29 @@
 
                     <div class="mb-2">
                         {{ form_label(registrationForm.email) }}
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mt-2 '}}) }}
                         <div class="error-msg mt-2">
                             {{ form_errors(registrationForm.email) }}
                         </div>
                     </div>
 
-                    <div class="mb-2">
-                        {{ form_label(registrationForm.plainPassword) }}
-                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.password.first) }}
+                        {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control mt-2 mb-2'}}) }}
 
-                        <div class="error-msg mt-2">
-                            {{ form_errors(registrationForm.plainPassword) }}
+                        <div class="error-msg mt-">
+                            {{ form_errors(registrationForm.password.first) }}
+                        </div>
+
+                        {{ form_label(registrationForm.password.second) }}
+                        {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control mt-2 mb-2'}}) }}
+
+                        <div class="error-msg mt-">
+                            {{ form_errors(registrationForm.password.second) }}
                         </div>
                     </div>
 
-                    <button class="btn btn-outline-success mt-3">{{ button_label|default('Register') }}</button>
+                    <button class="btn btn-outline-success mt-2">{{ button_label|default('Zarejestruj się') }}</button>
                 {{ form_end(registrationForm) }}
                 </div>
             </div>
