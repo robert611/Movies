@@ -12,9 +12,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Security\EmailVerifier;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Repository\UserRepository;
 
 class RegistrationController extends AbstractController
 {
+    private $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
+
     /**
      * @Route("/register", name="register")
      */
@@ -46,6 +58,15 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('task_manager@robert611.beep.pl', 'Movies Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Proszę potwierdź swój adres email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                )
+            ;
+
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
@@ -57,5 +78,35 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
+    {
+        $userId = $request->get('id');
+
+        if (null === $userId) {
+            return $this->redirectToRoute('index');
+        }
+
+        $user = $userRepository->find($userId);
+
+        if ($user->isVerified() == true)
+        {
+            $this->addFlash('error', 'Twój adres email został już potwierdzony');
+            return $this->redirectToRoute('index');
+        }
+
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('error', $exception->getReason());
+
+            return $this->redirectToRoute('register');
+        }
+
+        $this->addFlash('success', 'Twój adres email został potwierdzony');
+
+        return $this->redirectToRoute('index');
     }
 }
