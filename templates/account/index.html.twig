@@ -3,6 +3,14 @@
 {% block account_body %}
     <div class="row">
         <div class="col-12 col-md-12 ps-md-4 mb-5">
+            {% if app.user.isVerified is same as(false) %}
+                <div class="mb-4">
+                    <a href="{{ path('app_send_email_verification_link') }}" class="d-grid gap-2 text-decoration-none">
+                        <button type="button" class="btn btn-warning p-3">Twój adres email nie został jeszcze potwierdzony! Kliknij aby otrzymać link potwierdzający.</button>
+                    </a>
+                </div>
+            {% endif %}
+
             <h4 class="mb-4">Nazwa Użytkownika: {{ app.user.username }}</h4>
 
             <h4 class="mb-4">Twój Email: {{ app.user.email }}</h4>

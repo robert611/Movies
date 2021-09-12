@@ -109,4 +109,23 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('index');
     }
+
+    #[Route('/send/email/verification/link', name: 'app_send_email_verification_link')]
+    public function sendEmailVerificationLink()
+    {
+        $user = $this->getUser();
+
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('task_manager@robert611.beep.pl', 'Movies Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Proszę potwierdź swój adres email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                )
+            ;
+
+        $this->addFlash('success', 'Link potwierdzający został wysłany na twój adres email. Jeśli go nie widzisz przejrzyj folder ze spamem.');
+
+        return $this->redirectToRoute('account');
+    }
 }
