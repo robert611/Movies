@@ -60,6 +60,12 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+
+    /**
      * @ORM\OneToMany(targetEntity=Shows::class, mappedBy="user")
      */
     private $shows;
@@ -124,6 +130,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
