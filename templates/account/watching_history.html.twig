@@ -1,0 +1,37 @@
+{% extends 'account/account_template.html.twig' %}
+
+{% block account_body %}
+    <div class="row">
+        <div class="col-12 col-md-12 ps-md-4 mb-5">
+            <figure class="figure">
+                <blockquote class="blockquote">
+                    <p>Jeśli oglądałeś/aś więcej niż jeden odcinek danego serialu, zostanie wyświetlona tylko data obejrzenia ostatniego z nich. Po kliknięciu nazwy serialu, zostaniesz przeniesiony/a do strony z tym odcinkiem.</p>
+                </blockquote>
+            </figure>
+            {% for record in watchingHistory %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-9">
+                                <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : record.series.databaseTableName, 'episodeId': record.episodeId}) }}">
+                                    <h5 class="card-title">
+                                        {{ record.series.name }}
+                                    </h5>
+                                </a>
+                                <p>
+                                    {{ record.series.description|striptags|slice(0, 250)|raw }}...
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~record.series.picture) }}" alt="{{ record.series.picture }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ record.date|format_datetime('full', 'short', locale='pl') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

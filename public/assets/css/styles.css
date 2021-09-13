@@ -254,3 +254,15 @@ section#main-container {
     top: 8px;
     left: 16px;
 }
+
+blockquote {
+    border-left: solid 4px #f4ce21;
+    padding: 0 1em;
+    margin: 1em; 
+} 
+
+.figure {
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,.125);
+    width: 100%; 
+}

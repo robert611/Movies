@@ -11,6 +11,7 @@ use App\Form\Model\ChangeEmail;
 use App\Form\ChangePasswordType;
 use App\Form\ChangeEmailType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Repository\UserWatchingHistoryRepository;
 
 class AccountController extends AbstractController
 {
@@ -74,5 +75,13 @@ class AccountController extends AbstractController
             'changePasswordForm' => $changePasswordForm->createView(),
             'changeEmailForm' => $changeEmailForm->createView(),
         ]);
+    }
+
+    #[Route('account/watching/history', name: 'account_watching_history')]
+    public function watchingHistory(UserWatchingHistoryRepository $userWatchingHistoryRepository): Response
+    {
+        $watchingHistory = $userWatchingHistoryRepository->findBy(['user' => $this->getUser()]);
+
+        return $this->render('account/watching_history.html.twig', ['watchingHistory' => $watchingHistory]);
     }
 }
