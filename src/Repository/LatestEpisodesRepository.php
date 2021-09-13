@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\LatestEpisodes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Service\ShowRankingService;
 
 /**
  * @method LatestEpisodes|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,6 +28,8 @@ class LatestEpisodesRepository extends ServiceEntityRepository
 
         $latestEpisodesWithFilledData = array();
 
+        $showRankingService = new ShowRankingService($this->getEntityManager());
+
         foreach ($latestEpisodes as $episode)
         {
             $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, e.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.id = :episode_id";
@@ -38,7 +41,11 @@ class LatestEpisodesRepository extends ServiceEntityRepository
                 return $e->getMessage();
             }
 
-            $latestEpisodesWithFilledData[] = $stmt->fetch();
+            $result = $stmt->fetch();
+
+            $result == false ? null : $result['show_ranking_position'] = $showRankingService->getPosition($result['database_table_name']);
+
+            $latestEpisodesWithFilledData[] = $result;
         }
 
         return $latestEpisodesWithFilledData;

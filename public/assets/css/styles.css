@@ -243,3 +243,14 @@ section#main-container {
 .pl-0 {
     padding-left: 0px;
 }
+
+.image-container {
+    position: relative;
+    text-align: center;
+}
+
+.image-top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}

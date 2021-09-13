@@ -83,7 +83,14 @@
                                 {% if episode is iterable %}
                                     <div class="xol-xs-12 col-sm-6 col-md-4">
                                         <div class="card mb-2">
-                                            <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
+                                            <div class="image-container">
+                                                <img class="latest-episode-picture" src="{{ asset('assets/pictures/shows/'~episode.picture) }}" alt="{{ episode.picture }}">
+                                                {% if episode.show_ranking_position is not null %}
+                                                    <div class="image-top-left">
+                                                        <h5><span class="badge bg-danger">TOP {{ episode.show_ranking_position }}</span></h5>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
                                             <div class="card-body">
                                                 <a class="text-decoration-none" href="{{ path('show_index', {'showTableName' : episode.database_table_name, 'episodeId': episode.id}) }}">
                                                     <h5 class="card-title">
