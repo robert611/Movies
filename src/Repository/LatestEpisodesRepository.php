@@ -6,6 +6,7 @@ use App\Entity\LatestEpisodes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Service\ShowRankingService;
+use App\Entity\ShowRanking;
 
 /**
  * @method LatestEpisodes|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,24 +29,24 @@ class LatestEpisodesRepository extends ServiceEntityRepository
 
         $latestEpisodesWithFilledData = array();
 
-        $showRankingService = new ShowRankingService($this->getEntityManager());
+        $showRankingService = new ShowRankingService($this->getEntityManager()->getRepository(ShowRanking::class)->getTopShows(15));
 
-        foreach ($latestEpisodes as $episode)
-        {
-            $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, e.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.id = :episode_id";
+        try {
+            foreach ($latestEpisodes as $episode)
+            {
+                $sql = "SELECT e.id, e.title, e.season, s.picture, s.name as show_name, s.database_table_name, e.created_at FROM latest_episodes le, shows s, {$episode['show_database_table_name']} e WHERE s.database_table_name = :table_name AND le.show_database_table_name = :table_name AND e.id = :episode_id";
 
-            try {
                 $stmt = $conn->prepare($sql);
                 $stmt->execute(['table_name' => $episode['show_database_table_name'], 'episode_id' => $episode['episode_id']]);
-            } catch (DBALException $e) {
-                return $e->getMessage();
+                
+                $result = $stmt->fetch();
+
+                $result == false ? null : $result['show_ranking_position'] = $showRankingService->getPosition($result['database_table_name']);
+
+                $latestEpisodesWithFilledData[] = $result;
             }
-
-            $result = $stmt->fetch();
-
-            $result == false ? null : $result['show_ranking_position'] = $showRankingService->getPosition($result['database_table_name']);
-
-            $latestEpisodesWithFilledData[] = $result;
+        } catch (DBALException $e) {
+            return $e->getMessage();
         }
 
         return $latestEpisodesWithFilledData;

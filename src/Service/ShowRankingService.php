@@ -2,18 +2,15 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\ShowRanking;
 
 class ShowRankingService 
 {
-    private EntityManagerInterface $entityManager;
     private array $ranking;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(array $ranking)
     {
-        $this->entityManager = $entityManager;
-        $this->ranking = $this->entityManager->getRepository(ShowRanking::class)->getTopShows(15);
+        $this->ranking = $ranking;
     }
 
     public function getPosition(string $showTableName): null | int
