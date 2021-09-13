@@ -23,7 +23,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->client->request('GET', '/register');
         
         $this->assertEquals(200, $this->client->getResponse()->isSuccessful());
-        $this->assertSelectorTextContains('html h1', 'Register');
+        $this->assertSelectorTextContains('html h1', 'Rejestracja');
     }
 
     /**
@@ -33,10 +33,11 @@ class RegistrationControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/register');
 
-        $form = $crawler->selectButton('Register')->form();
+        $form = $crawler->selectButton('Zarejestruj się')->form();
 
         $form['registration_form[email]'] = 'test_registration_email@test.pl';
-        $form['registration_form[plainPassword]'] = 'password';
+        $form['registration_form[password][first]'] = 'password';
+        $form['registration_form[password][second]'] = 'password';
         $form['registration_form[username]'] = 'test_registration_user';
 
         $crawler = $this->client->submit($form);
@@ -62,8 +63,8 @@ class RegistrationControllerTest extends WebTestCase
      */
     public function testIfLogedInUserCannotRegister()
     {
-        $this->client->loginUser(static::$container->get(UserRepository::class)->findAll()[0]);
-
+        $this->client->loginUser(static::$container->get(UserRepository::class)->findOneBy([]));
+        
         $crawler = $this->client->request('GET', '/register');
 
         $this->assertResponseRedirects('/');
