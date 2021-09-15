@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="user.username.unique">
+                <source>user.username.unique</source>
+                <target>This username is already used</target>
+            </trans-unit>
+            <trans-unit id="user.username.length.min">
+                <source>user.username.length.min</source>
+                <target>Username must contain at least {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="user.username.length.max">
+                <source>user.username.length.max</source>
+                <target>Username cannot contain more than {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="user.email.unique">
+                <source>user.email.unique</source>
+                <target>This email is already used</target>
+            </trans-unit>
+            <trans-unit id="user.password.length.min">
+                <source>user.password.length.min</source>
+                <target>Password must contain at least {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="user.password.length.max">
+                <source>user.password.length.max</source>
+                <target>Password cannot contain more than {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="user.repeated_password">
+                <source>user.repeated_password</source>
+                <target>Passwords must match</target>
+            </trans-unit>
+            <trans-unit id="user.password_safe.is_true">
+                <source>user.password_safe.is_true</source>
+                <target>Password must be diffrent than username</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

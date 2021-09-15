@@ -13,8 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity("username", message="Nazwa użytkownika jest już zajęta")
- * @UniqueEntity("email", message="Adres Email jest już zajęty")
+ * @UniqueEntity("username", message="user.username.unique")
+ * @UniqueEntity("email", message="user.email.unique")
  */
 class User implements UserInterface
 {
@@ -31,8 +31,8 @@ class User implements UserInterface
      * @Assert\Length(
      *  min = 8,
      *  max = 64,
-     *  minMessage = "Nazwa użytkownika musi składać się z conajmniej {{ limit }} znaków",
-     *  maxMessage = "Nazwa użytkownika nie może składać się z więcej niż {{ limit }} znaków",
+     *  minMessage = "user.username.length.min",
+     *  maxMessage = "user.username.length.max",
      * )
      */
     private $username;
@@ -53,8 +53,8 @@ class User implements UserInterface
      * @Assert\Length(
      *  min = 8,
      *  max = 64,
-     *  minMessage = "Nowe hasło musi składać się z conajmniej {{ limit }} znaków",
-     *  maxMessage = "Nowe hasło nie może składać się z więcej niż {{ limit }} znaków",
+     *  minMessage = "user.password.length.min",
+     *  maxMessage = "user.password.length.max",
      * )
      */
     private $password;
@@ -63,7 +63,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
-
 
     /**
      * @ORM\OneToMany(targetEntity=Shows::class, mappedBy="user")
@@ -224,7 +223,7 @@ class User implements UserInterface
     }
 
     /**
-     * @Assert\IsTrue(message="Hasło musi się różnić od nazwy użytkownika")
+     * @Assert\IsTrue(message="user.password_safe.is_true")
      */
     public function isPasswordSafe(): bool
     {

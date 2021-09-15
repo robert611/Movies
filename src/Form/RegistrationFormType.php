@@ -20,7 +20,7 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Podane hasła muszą być identyczne',
+                'invalid_message' => 'user.repeated_password',
                 'required' => true,
                 'first_options' => array('label' => 'Hasło'),
                 'second_options' => array('label' => 'Powtórz hasło')
