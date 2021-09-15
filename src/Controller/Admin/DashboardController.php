@@ -47,24 +47,25 @@ class DashboardController extends AbstractDashboardController
             $showRepostiory = $this->getDoctrine()->getRepository(Shows::class);
 
             $formData = $form->getData();
+            $picture = $request->files->get('show')['picture'];
 
-            if ($showRepostiory->checkIfTableExists($formData['original_name'])) {
-                $this->addFlash('admin_error', "Table for show with name: {$formData['original_name']} already exists");
+            if ($showRepostiory->checkIfTableExists($formData->getDatabaseTableName())) {
+                $this->addFlash('admin_error', "Table for show with name: {$formData->getDatabaseTableName()} already exists");
 
                 return $this->redirectToRoute('admin_show_create');
             }
 
-            if ($uploadFileService->isNameAlreadyTaken($formData['picture'], $this->getParameter('shows_pictures_directory'))) {
+            if ($uploadFileService->isNameAlreadyTaken($picture, $this->getParameter('shows_pictures_directory'))) {
                 $this->addFlash('admin_error', "Picture with given name already exists");
 
                 return $this->redirectToRoute('admin_show_create');
             }
 
             $show = new Shows();
-            $show->setName($formData['name']);
-            $show->setDatabaseTableName($formData['original_name']);
-            $show->setPicture($uploadFileService->getNewFileName($formData['picture']));
-            $show->setDescription($formData['description']);
+            $show->setName($formData->getName());
+            $show->setDatabaseTableName($formData->getDatabaseTableName());
+            $show->setPicture($uploadFileService->getNewFileName($picture));
+            $show->setDescription($formData->getDescription());
             $show->setUser($this->getUser());
             $show->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
             $show->setUpdatedAt(null);
@@ -73,9 +74,9 @@ class DashboardController extends AbstractDashboardController
 
             $entityManager->flush();
 
-            $showRepostiory->createShowTable($formData['original_name']);
+            $showRepostiory->createShowTable($formData->getDatabaseTableName());
 
-            $uploadFileService->uploadFile($formData['picture'], $this->getParameter('shows_pictures_directory'));
+            $uploadFileService->uploadFile($picture, $this->getParameter('shows_pictures_directory'));
 
             $this->addFlash('admin_success', 'Show has been created');
 

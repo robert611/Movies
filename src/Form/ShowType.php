@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Entity\Shows;
 
 class ShowType extends AbstractType
 {
@@ -28,7 +29,7 @@ class ShowType extends AbstractType
                     new NotBlank()
                 ],
             ])
-            ->add('original_name', TextType::class,  [
+            ->add('database_table_name', TextType::class,  [
                 'constraints' => [
                     new Length([
                         'min' => 1,
@@ -59,7 +60,7 @@ class ShowType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => Shows::class,
         ]);
     }
 }
