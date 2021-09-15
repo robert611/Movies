@@ -222,4 +222,12 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @Assert\IsTrue(message="Hasło musi się różnić od nazwy użytkownika")
+     */
+    public function isPasswordSafe(): bool
+    {
+        return $this->username !== $this->password;
+    }
 }
