@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass=ShowsRepository::class)
@@ -28,6 +29,7 @@ class Shows
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @CustomAssert\ContainsMysqlTableAllowedCharacters(message="shows.database_table_name.contains_mysql_table_allowed_characters")
      * @Groups({"user_watching_history"})
      */
     private $database_table_name;

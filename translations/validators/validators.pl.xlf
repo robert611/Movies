@@ -2,6 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="pl" datatype="plaintext" original="file.ext">
         <body>
+            <!-- User Entity -->
             <trans-unit id="user.username.unique">
                 <source>user.username.unique</source>
                 <target>Nazwa użytkownika jest już zajęta</target>
@@ -33,6 +34,12 @@
             <trans-unit id="user.password_safe.is_true">
                 <source>user.password_safe.is_true</source>
                 <target>Hasło musi się różnić od nazwy użytkownika</target>
+            </trans-unit>
+
+            <!-- Shows Entity -->
+            <trans-unit id="shows.database_table_name.contains_mysql_table_allowed_characters">
+                <source>shows.database_table_name.contains_mysql_table_allowed_characters</source>
+                <target>Możesz używać tylko cyfr od 0 do 9, łacińskich liter, znaku dolara i podkreślenia</target>
             </trans-unit>
         </body>
     </file>

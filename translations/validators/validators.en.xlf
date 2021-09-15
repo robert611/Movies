@@ -2,6 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <!-- User Entity -->
             <trans-unit id="user.username.unique">
                 <source>user.username.unique</source>
                 <target>This username is already used</target>
@@ -33,6 +34,12 @@
             <trans-unit id="user.password_safe.is_true">
                 <source>user.password_safe.is_true</source>
                 <target>Password must be diffrent than username</target>
+            </trans-unit>
+
+            <!-- Shows Entity -->
+            <trans-unit id="shows.database_table_name.contains_mysql_table_allowed_characters">
+                <source>shows.database_table_name.contains_mysql_table_allowed_characters</source>
+                <target>You may only use numbers from 0 to 9, latin letters, dolar sign and underscore</target>
             </trans-unit>
         </body>
     </file>
