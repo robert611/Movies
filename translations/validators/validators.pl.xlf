@@ -37,9 +37,29 @@
             </trans-unit>
 
             <!-- Shows Entity -->
+            <trans-unit id="shows.name.length.min">
+                <source>shows.name.length.min</source>
+                <target>Nazwa musi składać się z przynajmniej {{ limit }} znaków</target>
+            </trans-unit>
+            <trans-unit id="shows.name.length.max">
+                <source>shows.name.length.max</source>
+                <target>Nazwa nie może się składać z więcej niz {{ limit }} znaków</target>
+            </trans-unit>
             <trans-unit id="shows.database_table_name.contains_mysql_table_allowed_characters">
                 <source>shows.database_table_name.contains_mysql_table_allowed_characters</source>
                 <target>Możesz używać tylko cyfr od 0 do 9, łacińskich liter, znaku dolara i podkreślenia</target>
+            </trans-unit>
+            <trans-unit id="shows.database_table_name.length.min">
+                <source>shows.database_table_name.length.min</source>
+                <target>Nazwa tabeli bazy danych musi składać się z przynajmniej {{ limit }} znaków</target>
+            </trans-unit>
+            <trans-unit id="shows.database_table_name.length.max">
+                <source>shows.database_table_name.length.max</source>
+                <target>Nazwa tabeli bazy danych nie może się składać z więcej niz {{ limit }} znaków</target>
+            </trans-unit>
+            <trans-unit id="shows.picture.image">
+                <source>shows.picture.image</source>
+                <target>Proszę przesyłać tylko zdjęcia</target>
             </trans-unit>
         </body>
     </file>

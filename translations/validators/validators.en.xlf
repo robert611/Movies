@@ -37,9 +37,29 @@
             </trans-unit>
 
             <!-- Shows Entity -->
+            <trans-unit id="shows.name.length.min">
+                <source>shows.name.length.min</source>
+                <target>Name must contain at least {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="shows.name.length.max">
+                <source>shows.name.length.max</source>
+                <target>Name cannot contain more than {{ limit }} characters</target>
+            </trans-unit>
             <trans-unit id="shows.database_table_name.contains_mysql_table_allowed_characters">
                 <source>shows.database_table_name.contains_mysql_table_allowed_characters</source>
                 <target>You may only use numbers from 0 to 9, latin letters, dolar sign and underscore</target>
+            </trans-unit>
+            <trans-unit id="shows.database_table_name.length.min">
+                <source>shows.database_table_name.length.min</source>
+                <target>Database Table Name must contain at least {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="shows.database_table_name.length.max">
+                <source>shows.database_table_name.length.max</source>
+                <target>Database Table Name cannot contain more than {{ limit }} characters</target>
+            </trans-unit>
+             <trans-unit id="shows.picture.image">
+                <source>shows.picture.image</source>
+                <target>Please upload only images</target>
             </trans-unit>
         </body>
     </file>

@@ -23,8 +23,8 @@ class ShowType extends AbstractType
                     new Length([
                         'min' => 1,
                         'max' => 150,
-                        'minMessage' => 'Nazwa musi składać się z przynajmniej {{ limit }} znaków',
-                        'maxMessage' => 'Nazwa nie może się składać z więcej niz {{ limit }} znaków',
+                        'minMessage' => 'shows.name.length.min',
+                        'maxMessage' => 'shows.name.length.max',
                     ]),
                     new NotBlank()
                 ],
@@ -34,8 +34,8 @@ class ShowType extends AbstractType
                     new Length([
                         'min' => 1,
                         'max' => 150,
-                        'minMessage' => 'Nazwa musi składać się z przynajmniej {{ limit }} znaków',
-                        'maxMessage' => 'Nazwa nie może się składać z więcej niz {{ limit }} znaków',
+                        'minMessage' => 'shows.database_table_name.length.min',
+                        'maxMessage' => 'shows.database_table_name.length.max',
                     ]),
                     new NotBlank()
                 ],
@@ -44,7 +44,7 @@ class ShowType extends AbstractType
                 'constraints' => [
                     new Image([
                         'maxSize' => '4096k', 
-                        'mimeTypesMessage' => 'Proszę przesyłać tylko zdjęcia'
+                        'mimeTypesMessage' => 'shows.picture.image'
                     ]),
                     new NotBlank()
                 ],
