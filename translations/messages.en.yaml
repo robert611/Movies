@@ -1,3 +1,5 @@
+Username: Username
+Email: Email
 recently_watched.homepage: Recently Watched
 shows.homepage: Shows
 clash_of.homepage: Clash Of
@@ -22,3 +24,7 @@ results_for_theme.metadata_show_search: Results for theme
 results_for_studio.metadata_show_search: Results for network
 all_shows_and_movies.metadata_show_search: All shows and movies
 no_results_for_show.metadata_show_search: There is no movie or show with such theme, category or network
+registration.registration: Registration
+register.registration: Register
+password.registration_form: Password
+repeat_password.registration_form: Repeat Password

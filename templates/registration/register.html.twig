@@ -6,7 +6,7 @@
         <div class="row justify-content-md-center p-2">
             <div class="card col-md-10">
                 <div class="card-body">
-                <h1 class="mb-4">Rejestracja</h1>
+                <h1 class="mb-4">{{ 'registration.registration'|trans|raw }}</h1>
 
                 {{ form_start(registrationForm) }}
                     <div class="mb-2">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-outline-success mt-2">{{ button_label|default('Zarejestruj się') }}</button>
+                    <button class="btn btn-outline-success mt-2">{{ 'register.registration'|trans|raw }}</button>
                 {{ form_end(registrationForm) }}
                 </div>
             </div>

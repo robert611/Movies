@@ -22,8 +22,8 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'user.repeated_password',
                 'required' => true,
-                'first_options' => array('label' => 'Hasło'),
-                'second_options' => array('label' => 'Powtórz hasło')
+                'first_options' => array('label' => 'password.registration_form'),
+                'second_options' => array('label' => 'repeat_password.registration_form')
             ])
         ;
     }
