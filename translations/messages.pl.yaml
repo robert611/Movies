@@ -41,3 +41,10 @@ no_recently_added_episode.homepage: W ostatnim czasie nie dodano żadnego nowego
 find_show.homepage: Znajdź Serial
 find_episode.homepage: Znajdź Odcinek
 at_least_three_characters.homepage: Minimum trzy litery
+search.navbar: Szukaj
+my_account.navbar: Moje Konto
+administrator_panel.navbar: Panel Administratora
+logout.navbar: Wyloguj się
+registration.navbar: Rejestracja
+login.navbar: Login
+password.navbar: Hasło

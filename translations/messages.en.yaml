@@ -6,3 +6,10 @@ no_recently_added_episode.homepage: In recent time no new episode was added
 find_show.homepage: Find Show
 find_episode.homepage: Find Episode
 at_least_three_characters.homepage: At least three characters
+search.navbar: Search
+my_account.navbar: My Account
+administrator_panel.navbar: Admin Panel
+logout.navbar: Logout
+registration.navbar: Registration
+login.navbar: Login
+password.navbar: Password
