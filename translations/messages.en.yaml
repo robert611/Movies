@@ -13,3 +13,12 @@ logout.navbar: Logout
 registration.navbar: Registration
 login.navbar: Login
 password.navbar: Password
+search_show.metadata_show_search: Search for a Show
+categories.metadata_show_search: Categories
+themes.metadata_show_search: Themes
+networks.metadata_show_search: Networks
+results_for_category.metadata_show_search: Results for category
+results_for_theme.metadata_show_search: Results for theme
+results_for_studio.metadata_show_search: Results for network
+all_shows_and_movies.metadata_show_search: All shows and movies
+no_results_for_show.metadata_show_search: There is no movie or show with such theme, category or network

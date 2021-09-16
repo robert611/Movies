@@ -48,3 +48,12 @@ logout.navbar: Wyloguj się
 registration.navbar: Rejestracja
 login.navbar: Login
 password.navbar: Hasło
+search_show.metadata_show_search: Szukaj Serialu
+categories.metadata_show_search: Kategorie
+themes.metadata_show_search: Motywy
+networks.metadata_show_search: Stacje Telewizyjne
+results_for_category.metadata_show_search: Wyniki dla kategorii
+results_for_theme.metadata_show_search: Wyniki dla motywu
+results_for_studio.metadata_show_search: Wyniki dla stacji telewizyjnej
+all_shows_and_movies.metadata_show_search: Wszystkie filmy i seriale
+no_results_for_show.metadata_show_search: Nie znaleziono żadnego serialu ani filmu o takim motywie, kategorii bądź studiu
