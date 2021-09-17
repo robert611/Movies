@@ -17,7 +17,7 @@
                         {% for season, firstEpisode in showSeasonsNumbers %}
                             <a href="{{ path('show_index', {'showTableName': show.getDatabaseTableName(), 'episodeId': firstEpisode}) }}">
                                 <button class="btn btn-outline-secondary mt-1" id="season{{ season }}" role="button" aria-expanded="false">
-                                    Sezon {{ season }}
+                                    {{ 'season.show_page'|trans|raw }} {{ season }}
                                 </button>
                             </a>
                         {% endfor %}
@@ -49,7 +49,7 @@
                                 <div class="col-sm-4 col-md-4">
                                     <a class="nav-link card-custom-link" href="{{ link.getLink() }}" target="_blank" >
                                         {% if link.getName() is empty %}
-                                            Nieznane źródło
+                                            {{ 'unknown_source.show_page'|trans|raw }}
                                         {% else %}
                                             {{ link.getName() }}
                                         {% endif %}
@@ -61,7 +61,7 @@
 
                     <div class="card episode-description-card mb-3 mt-3">
                         <div class="card-body">
-                            <h4>{{ show.getName() }} - {{ episode.title }} <span class="text-grey-dark">#Odcinek {{ episode.episode }}</span></h4>
+                            <h4>{{ show.getName() }} - {{ episode.title }} <span class="text-grey-dark">#{{ 'episode.show_page'|trans|raw }} {{ episode.episode }}</span></h4>
                             <p>
                                 {% if episode.description is null or episode.description is empty %}
                                     {{ show.getDescription()|raw }}
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             {% else %} 
-                <h3 class="mt-5 col-xs-4 offset-md-2">Ten odcinek nie został jeszcze dodany</h3>
+                <h3 class="mt-5 col-xs-4 offset-md-2">{{ 'episode_has_not_been_added.show_page'|trans|raw }}</h3>
             {% endif %}
         </div>
 
@@ -94,7 +94,7 @@
         
             <section class="similar-shows">
 
-                <h4 class="mb-4">#Podobne Filmy i Seriale</h4>
+                <h4 class="mb-4">#{{ 'similar_shows_and_movies.show_page'|trans|raw }}</h4>
 
                 <div class="row mb-4">
                     {% for element in similarShows %}

@@ -61,3 +61,8 @@ registration.registration: Rejestracja
 register.registration: Zarejestruj się
 password.registration_form: Hasło
 repeat_password.registration_form: Powtórz hasło
+season.show_page: Sezon
+unknown_source.show_page: Nieznane źródło
+episode.show_page: Odcinek
+episode_has_not_been_added.show_page: Ten odcinek nie został jeszcze dodany
+similar_shows_and_movies.show_page: Podobne Filmy i Seriale

@@ -28,3 +28,8 @@ registration.registration: Registration
 register.registration: Register
 password.registration_form: Password
 repeat_password.registration_form: Repeat Password
+season.show_page: Season
+unknown_source.show_page: Unknown Source
+episode.show_page: Episode
+episode_has_not_been_added.show_page: This episode has not been added yet
+similar_shows_and_movies.show_page: Similar Shows and Movies
