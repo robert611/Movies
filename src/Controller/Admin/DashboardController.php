@@ -136,7 +136,7 @@ class DashboardController extends AbstractDashboardController
                 return $this->render('admin/show/create_episode.html.twig', ['showDatabaseTableName' => $showDatabaseTableName, 'form' => $form->createView()]);
             }
 
-            $episode = $showRepostiory->getLastAddedShowEpisode($showDatabaseTableName);
+            $episode = $showRepostiory->findLastAddedShowEpisode($showDatabaseTableName);
 
             $episodeLinkService->saveEpisodeLinks($request, $showDatabaseTableName, $episode['id']);
 

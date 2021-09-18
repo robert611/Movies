@@ -146,7 +146,7 @@ class AdminControllerTest extends WebTestCase
     
         $this->assertResponseRedirects("/admin/show/episode/create/${showDatabaseTableName}");
 
-        $lastAddedEpisode = $this->showRepository->getLastAddedShowEpisode($showDatabaseTableName);
+        $lastAddedEpisode = $this->showRepository->findLastAddedShowEpisode($showDatabaseTableName);
 
         $entityManager = static::$container->get('doctrine.orm.entity_manager');
 
@@ -178,7 +178,7 @@ class AdminControllerTest extends WebTestCase
 
         $this->showRepository->saveShowEpisode($showDatabaseTableName, ['title' => 'Just some test title', 'season' => 5, 'episode_number' => 100, 'description' => 'Some description', 'user_id' => 1]);
 
-        $lastAddedEpisode = $this->showRepository->getLastAddedShowEpisode($showDatabaseTableName);
+        $lastAddedEpisode = $this->showRepository->findLastAddedShowEpisode($showDatabaseTableName);
 
         $crawler = $this->client->request('GET', "/admin/show/episode/edit/{$showDatabaseTableName}/{$lastAddedEpisode['id']}");
     
@@ -196,7 +196,7 @@ class AdminControllerTest extends WebTestCase
 
         $crawler = $this->client->submit($form);
 
-        $lastAddedEpisode = $this->showRepository->getLastAddedShowEpisode($showDatabaseTableName);
+        $lastAddedEpisode = $this->showRepository->findLastAddedShowEpisode($showDatabaseTableName);
 
         if ($lastAddedEpisode['title'] == $episodeTitle) {
             $this->showRepository->deleteShowEpisode($showDatabaseTableName, $lastAddedEpisode['id']);

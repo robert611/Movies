@@ -21,15 +21,15 @@ class LatestEpisodesRepository extends ServiceEntityRepository
         parent::__construct($registry, LatestEpisodes::class);
     }
 
-    public function getLatestEpisodesWithFilledData(int $numberOfEpisodes = 9): array
+    public function findLatestEpisodesWithFilledData(int $numberOfEpisodes = 9): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $latestEpisodes = $this->getLatestEpisodes($numberOfEpisodes);
+        $latestEpisodes = $this->findLatestEpisodes($numberOfEpisodes);
 
         $latestEpisodesWithFilledData = array();
 
-        $showRankingService = new ShowRankingService($this->getEntityManager()->getRepository(ShowRanking::class)->getTopShows(15));
+        $showRankingService = new ShowRankingService($this->getEntityManager()->getRepository(ShowRanking::class)->findTopShows(15));
 
         try {
             foreach ($latestEpisodes as $episode)
@@ -52,7 +52,7 @@ class LatestEpisodesRepository extends ServiceEntityRepository
         return $latestEpisodesWithFilledData;
     }
 
-    public function getLatestEpisodes(int $numberOfEpisodes): array
+    public function findLatestEpisodes(int $numberOfEpisodes): array
     {
         $conn = $this->getEntityManager()->getConnection();
 

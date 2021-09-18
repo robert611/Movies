@@ -79,7 +79,7 @@ class ShowsRepository extends ServiceEntityRepository
         return true;
     }
 
-    public function getLastAddedShowEpisode(string $showDatabaseTableName): ?array
+    public function findLastAddedShowEpisode(string $showDatabaseTableName): ?array
     {
         $conn = $this->getEntityManager()->getConnection();
 

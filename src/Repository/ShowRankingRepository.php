@@ -19,7 +19,7 @@ class ShowRankingRepository extends ServiceEntityRepository
         parent::__construct($registry, ShowRanking::class);
     }
 
-    public function getTopShows(int $showsLimit): array
+    public function findTopShows(int $showsLimit): array
     {
         $conn = $this->getEntityManager()->getConnection();
 

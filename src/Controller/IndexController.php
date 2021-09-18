@@ -26,10 +26,10 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         $showsRanking = $this->getDoctrine()
-            ->getRepository(ShowRanking::class)->getTopShows(15);
+            ->getRepository(ShowRanking::class)->findTopShows(15);
         
         $showsLatestEpisodes = $this->getDoctrine()
-            ->getRepository(LatestEpisodes::class)->getLatestEpisodesWithFilledData(9);
+            ->getRepository(LatestEpisodes::class)->findLatestEpisodesWithFilledData(9);
 
         $userWatchingHistory = $this->getDoctrine()
             ->getRepository(UserWatchingHistory::class)->findBy(['user' => $this->getUser()], ['date' => 'DESC'], 4);
