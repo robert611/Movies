@@ -20,7 +20,7 @@
             <h3 class="mt-3 mb-3 text-white">{{ 'networks.metadata_show_search'|trans|raw }}</h3>
 
             {% for studio in studios %}
-                <li class="sidenav-link"><a href="{{ path('meta_data_show_search', {studioId: studio.id}) }}">{{ studio.name|replace({'_': ' '})|title }}</a></li>
+                <li class="sidenav-link"><a href="{{ path('meta_data_show_search', {studioId: studio.id}) }}">{{ studio.name|format_studio_name }}</a></li>
             {% endfor %}
         </div>
     </header>
