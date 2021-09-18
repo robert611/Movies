@@ -1,11 +1,15 @@
-<h1>Witaj! Proszę potwierdź swój adres email!</h1>
+{% apply inky_to_html %}
+    <container>
+        <row>
+            <columns>
+                <h1>Witaj! Proszę potwierdź swój adres email!</h1>
 
-<p>
-    Proszę potwierdź swój adres email poprzez kliknięcie tego linku: <br><br>
-    <a href="{{ signedUrl }}">Potwierdź email</a>.
-    Ten link wygaśnie w ciągu {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
-
-<p>
-    Pozdrowienia!
-</p>
+                <p>
+                    Proszę potwierdź swój adres email poprzez kliknięcie tego linku: <br><br>
+                    <a href="{{ signedUrl }}">Potwierdź email</a>.
+                    Ten link wygaśnie w ciągu {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+                </p>
+            </columns>
+        </row>
+    </container>
+{% endapply %}
