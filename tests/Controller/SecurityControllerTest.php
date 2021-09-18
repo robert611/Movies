@@ -41,7 +41,7 @@ class SecurityControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/');
 
-        $this->assertSelectorTextContains('html', 'Logout');
+        $this->assertSelectorTextContains('html', 'Wyloguj się');
         $this->assertSelectorTextNotContains('html', 'Login');
     }
 
@@ -59,11 +59,11 @@ class SecurityControllerTest extends WebTestCase
 
         $this->client->request('GET', '/');
 
-        $this->client->clickLink('Logout');
+        $this->client->clickLink('Wyloguj się');
 
         $this->client->request('GET', '/');
 
         $this->assertSelectorTextContains('html', 'Login');
-        $this->assertSelectorTextNotContains('html', 'Logout');
+        $this->assertSelectorTextNotContains('html', 'Wyloguj się');
     }
 }

@@ -83,7 +83,7 @@ class AdminControllerTest extends WebTestCase
         $description = 'Just a test description';
 
         $form['show[name]'] = $name;
-        $form['show[original_name]'] = $originalName;
+        $form['show[database_table_name]'] = $originalName;
         $form['show[picture]']->upload('./public/assets/pictures/test_picture.png');
         $form['show[description]'] = $description;
 

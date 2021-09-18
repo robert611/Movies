@@ -89,9 +89,11 @@ class MetaDataShowSearchControllerTest extends WebTestCase
 
         $studios = $this->studioRepository->findStudiosContainingShows();
 
+        $content = $this->client->getResponse()->getContent();
+
         foreach ($studios as $studio)
         {
-            $this->assertSelectorTextContains('html', ucfirst($studio['name']));
+            $this->assertStringContainsString('<a href="/meta/data/show/search?studioId=' . $studio['id'], $content);
         }
     }
 
@@ -144,7 +146,7 @@ class MetaDataShowSearchControllerTest extends WebTestCase
 
         $foundShows = $this->showsRepository->findShowsByStudio($studio['id']);
 
-        $this->assertSelectorTextContains('html', 'Wyniki dla studia: ' . ucfirst($studio['name']));
+        $this->assertSelectorTextContains('html', 'Wyniki dla stacji telewizyjnej: ' . ucfirst($studio['name']));
         
         foreach ($foundShows as $show)
         {
