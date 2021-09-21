@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Model;
+namespace App\Tests\Service;
 
 use App\Service\FindSimilarShows;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
