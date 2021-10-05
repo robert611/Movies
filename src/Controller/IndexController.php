@@ -44,7 +44,7 @@ class IndexController extends AbstractController
     /**
      * @Route("api/shows/fetch", name="api_shows_fetch")
      */
-    public function fetchShows()
+    public function fetchShows(): Response
     {
         $showsRepository = $this->getDoctrine()->getRepository(Shows::class);
 
@@ -93,7 +93,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/api/user/watching/history/fetch", name="api_user_watching_history_fetch")
      */
-    public function fetchUserWatchingHistory()
+    public function fetchUserWatchingHistory(): Response
     {
         $userWatchingHistory = $this->getDoctrine()
             ->getRepository(UserWatchingHistory::class)->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
