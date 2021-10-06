@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppCustomAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -111,7 +112,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/send/email/verification/link', name: 'app_send_email_verification_link')]
-    public function sendEmailVerificationLink()
+    public function sendEmailVerificationLink(): RedirectResponse
     {
         $user = $this->getUser();
 
